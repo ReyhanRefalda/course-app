@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Middleware\AdminMiddleware;
 
+// Route utama untuk halaman depan
 Route::get('/', function () {
     return view('home');
 });
@@ -29,4 +31,16 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+
+Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/users', [AdminController::class, 'listUsers'])->name('users.index');
+    Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+    Route::patch('/users/{id}/updateUser', [AdminController::class, 'updateUser'])->name('users.updateUser');
+    // Route untuk menghapus pengguna
+    Route::delete('users/{id}/destroyUser', [AdminController::class, 'destroyUser'])->name('users.destroyUser');
+});
+
+
+
+// Pastikan untuk memanggil file auth.php
 require __DIR__ . '/auth.php';

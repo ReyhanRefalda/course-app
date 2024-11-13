@@ -9,17 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->usertype == 'admin') {
+        if (Auth::check() && Auth::user()->usertype === 'admin') {
             return $next($request);
-        } else {
-            return abort(403);
         }
+
+        abort(403, 'Access denied'); // Respons jika bukan admin
     }
 }
