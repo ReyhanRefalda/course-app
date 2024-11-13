@@ -30,7 +30,7 @@
                             alt="external-edit-mintab-for-ios-becris-lineal-becris">
                     </div>
                 @else
-                    <img src="{{ asset('asset/default-profile.png') }}" alt="{{ $user->avatar }}"
+                    <img src="{{ asset('aset/default-profile.png') }}" alt="{{ $user->avatar }}"
                         class="w-20 h-20 rounded-full object-cover">
 
                     <!-- Button SVG Ikon Ganti Logo -->

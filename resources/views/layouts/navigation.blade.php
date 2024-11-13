@@ -21,13 +21,13 @@
                             {{ __('User') }}
                         </x-nav-link>
                     </div>
-              @else
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                   
-                </div>
+                @else
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                    </div>
                 @endif
             </div>
 
@@ -41,7 +41,7 @@
                                     alt="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->avatar }}"
                                     class="aspect-square w-10 h-full rounded-full object-cover" />
                             @else
-                                <img src="{{ asset('asset/default-profile.png') }}" alt="{{ Auth::user()->name }}"
+                                <img src="{{ asset('aset/default-profile.png') }}" alt="{{ Auth::user()->name }}"
                                     class="aspect-square w-12 h-full rounded-full object-cover" />
                             @endif
                         </button>
