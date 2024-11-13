@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role', ['admin', 'creator', 'user']); // Menambahkan kolom role dengan enum
+            $table->string('usertype')->default('user');
+            $table->string('avatar')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
