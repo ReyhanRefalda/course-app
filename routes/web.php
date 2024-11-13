@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Admin\AdminController;
 
 Route::get('/', function () {
     return view('home');
 });
 
+// Route untuk autentikasi dan pengaturan profil
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -16,14 +19,16 @@ Route::middleware('auth')->group(function () {
     
 });
 
+// Route utama untuk dashboard yang mengarahkan sesuai role
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        // Cek peran pengguna dan arahkan ke controller yang sesuai
+        if (Auth::user()->usertype === 'admin') {
+            return app(AdminController::class)->index();
+        } else {
+            return app(UserController::class)->index();
+        }
+    })->name('dashboard');
+});
+
 require __DIR__ . '/auth.php';
-
-// Route untuk user
-Route::middleware(['auth', 'userMiddleware'])->group(function () {
-    Route::get('dashboard', [Controllers\User\UserController::class, 'index'])->name('user.dashboard');
-});
-
-// Route untuk admin
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'adminMiddleware'])->group(function () {
-    Route::get('/dashboard', [Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
-});
