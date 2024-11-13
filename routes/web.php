@@ -1,15 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -17,4 +14,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+// Route untuk user
+Route::middleware(['auth', 'userMiddleware'])->group(function () {
+    Route::get('dashboard', [Controllers\User\UserController::class, 'index'])->name('user.dashboard');
+});
+
+// Route untuk admin
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'adminMiddleware'])->group(function () {
+    Route::get('/dashboard', [Controllers\Admin\AdminController::class, 'index'])->name('dashboard');
+});
