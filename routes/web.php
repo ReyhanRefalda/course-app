@@ -33,6 +33,9 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+Route::get('/review', function () {
+    return view('review.index');
+});
 
 Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/users', [AdminController::class, 'listUsers'])->name('users.index');
