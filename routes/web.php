@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    
 });
 
 // Route utama untuk dashboard yang mengarahkan sesuai role
@@ -36,7 +38,14 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+
+Route::get('/review', function () {
+    return view('review.index');
+});
+
+
 // Rute untuk manajemen pengguna oleh admin
+
 Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/users', [AdminController::class, 'listUsers'])->name('users.index');
     Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('users.edit');
