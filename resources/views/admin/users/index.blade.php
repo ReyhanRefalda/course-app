@@ -1,5 +1,5 @@
-<x-app-layout>
-    <div class="container mx-auto p-8 bg-gray-50 rounded-lg shadow-lg">
+<x-admin>
+    <div class="container mx-auto p-8 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-8 text-gray-700 text-center">Daftar Pengguna</h1>
 
         @if (session('success'))
@@ -32,7 +32,7 @@
                                 class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                                 <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
-                                    d="M10 3a1 1 0 011 1v7a1 1 0 01-2 0V4a1 1 0 011-1zM5 8a1 1 0 011 1v4a1 1 0 01-2 0V9a1 1 0 011-1zm9 0a1 1 0 011 1v4a1 1 0 01-2 0V9a1 1 0 011-1zM6.293 2.293a1 1 0 111.414 1.414L5.414 4H9a1 1 0 110 2H4a1 1 0 110-2h3.586l2.293-2.293a1 1 0 111.414 1.414L9 4h2a2 2 0 012 2v10a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h2l-2.293-2.293z" />
+                                        d="M10 3a1 1 0 011 1v7a1 1 0 01-2 0V4a1 1 0 011-1zM5 8a1 1 0 011 1v4a1 1 0 01-2 0V9a1 1 0 011-1zm9 0a1 1 0 011 1v4a1 1 0 01-2 0V9a1 1 0 011-1zM6.293 2.293a1 1 0 111.414 1.414L5.414 4H9a1 1 0 110 2H4a1 1 0 110-2h3.586l2.293-2.293a1 1 0 111.414 1.414L9 4h2a2 2 0 012 2v10a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2h2l-2.293-2.293z" />
                                 </svg>
                                 Edit
                             </a>
@@ -55,4 +55,4 @@
             </tbody>
         </table>
     </div>
-</x-app-layout>
+</x-admin>
