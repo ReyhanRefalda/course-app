@@ -6,8 +6,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArtikelController as AdminArtikelController;  // ArtikelController for admin
+use App\Http\Controllers\Admin\KursusController as AdminKursusController;  // ArtikelController for admin
 use App\Http\Controllers\User\ArtikelController as UserArtikelController;  // ArtikelController for user
 use App\Http\Controllers\Admin\KomentarController as AdminKomentarController;
+use App\Http\Controllers\KursusController;
 use App\Http\Controllers\User\KomentarController as UserKomentarController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
@@ -43,6 +45,7 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
     Route::patch('/users/{id}/updateUser', [AdminController::class, 'updateUser'])->name('users.updateUser');
     Route::delete('/users/{id}/destroyUser', [AdminController::class, 'destroyUser'])->name('users.destroyUser');
     Route::resource('artikel', AdminArtikelController::class);
+    Route::resource('kursus', AdminKursusController::class);
 });
 
 // Route User
