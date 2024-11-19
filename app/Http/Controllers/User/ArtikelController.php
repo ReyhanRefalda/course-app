@@ -9,7 +9,7 @@ class ArtikelController extends Controller
 {
     public function index()
     {
-        $artikels = Artikel::latest()->paginate(10); // Menampilkan artikel untuk user
+        $artikels = Artikel::where('status', 'publish')->orderBy('id', 'desc')->paginate(3);
         return view('user.artikel.index', compact('artikels'));
     }
 
@@ -18,6 +18,6 @@ class ArtikelController extends Controller
         $artikel = Artikel::with('user')->findOrFail($id); // Pastikan relasi user dimuat
         return view('user.artikel.show', compact('artikel'));
     }
-    
-    
+
+
 }

@@ -20,6 +20,8 @@
     <!-- Core Css Modernize-->
     <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}" />
 
+    <link rel="stylesheet" href="{{ asset('aset/css/app.css') }}" />
+
     {{-- flowbite --}}
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
 
@@ -29,6 +31,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
+
 
 </head>
 
