@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Modul;
 use App\Models\Kursus;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KursusController extends Controller
@@ -17,7 +18,8 @@ class KursusController extends Controller
         $user = Auth::user();
         $search = $request->search;
         $kursus = Kursus::all();
-        return view('admin.kursus.index', compact('kursus'));
+        $moduls = Modul::all();
+        return view('admin.kursus.index', compact('kursus', 'moduls'));
     }
 
     /**
@@ -25,7 +27,8 @@ class KursusController extends Controller
      */
     public function create()
     {
-        return view('admin.kursus.create');
+        $moduls = Modul::all();
+        return view('admin.kursus.create', compact('moduls'));
     }
 
     /**
@@ -36,7 +39,8 @@ class KursusController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required',
-            'harga' => 'required|numeric|min:0', 
+            'harga' => 'required|numeric|min:0',
+            'modul_id' => 'required|exists:modul,id',
         ], [
             'judul.required' => 'Judul wajib diisi',
             'deskripsi.required' => 'Deskripsi wajib diisi',
@@ -46,9 +50,10 @@ class KursusController extends Controller
         ]);
 
         $data = [
-            'judul'=> $request->judul,
-            'deskripsi'=> $request->deskripsi,
-            'harga'=> $request->harga
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga,
+            'modul_id' => $request->modul_id
         ];
 
         Kursus::create($data);
@@ -59,10 +64,7 @@ class KursusController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Kursus $kursus)
-    {
-        
-    }
+    public function show(Kursus $kursus) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -81,9 +83,9 @@ class KursusController extends Controller
         $kursus = Kursus::findOrFail($id);
 
         $validatedData = $request->validate([
-            'judul' => 'required|string|max:255', 
-            'deskripsi' => 'required|string', 
-            'harga' => 'required|numeric|min:0', 
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'harga' => 'required|numeric|min:0',
         ], [
             'judul.required' => 'Judul wajib diisi',
             'judul.string' => 'Judul harus berupa teks',
@@ -116,5 +118,4 @@ class KursusController extends Controller
             ->route('admin.kursus.index')
             ->with('success', 'Kursus berhasil dihapus!');
     }
-
 }
