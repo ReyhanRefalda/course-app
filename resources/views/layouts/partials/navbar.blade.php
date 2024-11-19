@@ -39,7 +39,6 @@
         </li>
     </ul>
     <div class="flex items-center gap-4">
-        <a href="#" class="btn font-medium hover:bg-blue-700 py-2" aria-current="page">Download Free</a>
         <div class="hs-dropdown relative inline-flex [--placement:bottom-right] sm:[--trigger:hover]">
             <a class="flex items-center gap-2 relative hs-dropdown-toggle cursor-pointer align-middle rounded-full">
                 @if (Auth::user()->avatar)
@@ -68,14 +67,6 @@
                         class="flex gap-2 items-center px-4 py-[6px] hover:bg-blue-500">
                         <i class="ti ti-user text-gray-500 text-xl "></i>
                         <p class="text-sm text-gray-500">My Profile</p>
-                    </a>
-                    <a href="javscript:void(0)" class="flex gap-2 items-center px-4 py-[6px] hover:bg-blue-500">
-                        <i class="ti ti-mail text-gray-500 text-xl"></i>
-                        <p class="text-sm text-gray-500">My Account</p>
-                    </a>
-                    <a href="javscript:void(0)" class="flex gap-2 items-center px-4 py-[6px] hover:bg-blue-500">
-                        <i class="ti ti-list-check text-gray-500 text-xl "></i>
-                        <p class="text-sm text-gray-500">My Task</p>
                     </a>
                     <div class="px-4 mt-[7px] grid">
                         <form method="POST" action="{{ route('logout') }}"

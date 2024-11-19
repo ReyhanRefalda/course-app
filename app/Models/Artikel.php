@@ -13,18 +13,19 @@ class Artikel extends Model
 
     // Kolom yang bisa diisi secara massal
     protected $fillable = [
-        'judul',
-        'isi',
+        'title',
+        'slug',
+        'description',
+        'content',
+        'status',
+        'tumbnail',
         'users_id',
     ];
 
     // Relasi ke model User (admin yang membuat artikel)
-  // Artikel.php
-  public function user()
-  {
-      return $this->belongsTo(User::class, 'users_id');
-  }
-
-
-   
+    // Artikel.php
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
 }

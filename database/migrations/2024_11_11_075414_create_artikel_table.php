@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('artikel', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->longText('isi');
-            $table->foreignId('users_id')->constrained('users');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('description')->nullable();
+            $table->text('content')->nullable();
+            $table->enum('status', ['draft', 'publish'])->default('draft');
+            $table->string('tumbnail')->nullable();
+            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
