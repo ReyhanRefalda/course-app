@@ -4,7 +4,7 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="nama" :value="__('nama')" />
+            <x-input-label for="nama" :value="__('Nama')" />
             <x-text-input id="nama" class="block mt-1 w-full" type="text" name="nama" :value="old('nama')" required
                 autofocus />
             <x-input-error :messages="$errors->get('nama')" class="mt-2" />
