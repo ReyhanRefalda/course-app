@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->longText('deskripsi');
             $table->decimal('harga');
+            $table->foreignId('modul_id')->constrained('modul');
             $table->timestamps();
         });
     }

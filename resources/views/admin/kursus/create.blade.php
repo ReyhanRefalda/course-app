@@ -28,6 +28,18 @@
                         class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                 </div>
+                {{-- modul input --}}
+                <div class="flex flex-col gap-2">
+                    <label for="modul_id" class="block text-gray-800 font-semibold">Modul</label>
+                    <select name="modul_id" id="modul_id"
+                        class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="0">Pilih Modul</option>
+                        @foreach ($moduls as $modul)
+                            <option value="{{ $modul->id }}">{{ $modul->judul }}</option>
+                        @endforeach
+                    </select>
+                    <x-input-error class="mt-2" :messages="$errors->get('modul_id')" />
+                </div>
             </div>
         </div>
         <button type="submit"
