@@ -16,6 +16,7 @@ class Kursus extends Model
         'judul',
         'deskripsi',
         'harga',
+        'modul_id',
     ];
 
     // Relasi ke model User (admin yang membuat artikel)
@@ -26,6 +27,6 @@ class Kursus extends Model
     }
     public function modul()
     {
-        return $this->belongsTo(User::class, 'modul_id');
+        return $this->hasMany(User::class, 'modul_id');
     }
 }
