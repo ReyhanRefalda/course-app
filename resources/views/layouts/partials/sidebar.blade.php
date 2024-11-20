@@ -41,6 +41,18 @@
                             <i class="ti ti-news  text-xl"></i> <span>Daftar Kursus</span>
                         </a>
                     </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
+                            href="{{ route('admin.modul.index') }}">
+                            <i class="ti ti-news  text-xl"></i> <span>Daftar Modul</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
+                            href="{{ route('admin.pelajaran.index') }}">
+                            <i class="ti ti-news  text-xl"></i> <span>Daftar Pelajaran</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
