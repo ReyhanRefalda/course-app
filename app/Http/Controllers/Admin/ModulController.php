@@ -25,8 +25,8 @@ class ModulController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'pelajaran' => 'required|array', // Pelajaran harus berupa array
-            'pelajaran.*' => 'exists:pelajaran,id', // Pastikan setiap ID pelajaran valid
+            'pelajaran' => 'required|array', 
+            'pelajaran.*' => 'exists:pelajaran,id', 
         ]);
 
         // Buat Modul

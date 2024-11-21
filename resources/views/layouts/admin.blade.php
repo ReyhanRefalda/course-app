@@ -11,6 +11,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('assets/images/logos/favicon.png') }}" />
@@ -57,7 +58,7 @@
         </div>
     </main>
 
-    <!-- jQuery (Load First) -->
+    <!-- jQuery -->
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
 
     <!-- Select2 JS -->
@@ -68,8 +69,6 @@
 
     <!-- Trix Editor JS -->
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
-
-    
 
     <!-- Modernize JS -->
     <script src="{{ asset('assets/libs/simplebar/dist/simplebar.min.js') }}"></script>
@@ -88,7 +87,6 @@
                 allowClear: true
             });
         });
-        
     </script>
 </body>
 
