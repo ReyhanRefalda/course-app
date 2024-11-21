@@ -17,12 +17,15 @@ use App\Http\Controllers\User\PelajaranController as UserPelajaranController; //
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
 
+
 // Halaman utama
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/artikel', [UserArtikelController::class, 'index'])->name('user.artikel.index'); // Daftar artikel
 
-// Route untuk autentikasi dan pengaturan profil
+require __DIR__ . '/auth.php';
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -51,13 +54,14 @@ Route::middleware(['auth', AdminMiddleware::class])
         Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('users.edit');
         Route::patch('/users/{id}/updateUser', [AdminController::class, 'updateUser'])->name('users.updateUser');
         Route::delete('/users/{id}/destroyUser', [AdminController::class, 'destroyUser'])->name('users.destroyUser');
-        
+
         // CRUD artikel
         Route::resource('artikel', AdminArtikelController::class);
-        
+
         // CRUD kursus
         Route::resource('kursus', AdminKursusController::class);
-        
+
+
 
         // CRUD modul
         Route::resource('modul', AdminModulController::class);
@@ -74,8 +78,8 @@ Route::middleware(['auth', UserMiddleware::class])
         // Daftar dan detail artikel
         Route::get('/artikel', [UserArtikelController::class, 'index'])->name('artikel.index');
         Route::get('/artikel/{id}', [UserArtikelController::class, 'show'])->name('artikel.show');
-        
-        
+
+
     });
 
-require __DIR__ . '/auth.php';
+Route::get('/{slug}', [UserArtikelController::class, 'detail'])->name('user.artikel.show'); // Detail
