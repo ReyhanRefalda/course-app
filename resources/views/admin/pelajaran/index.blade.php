@@ -1,6 +1,8 @@
 <x-admin>
     <x-slot name="title">Daftar Pelajaran</x-slot>
 
+    <h1>tes</h1>
+
     <div class="mb-4">
         <a href="{{ route('admin.pelajaran.create') }}" class="btn btn-primary">Tambah Pelajaran</a>
     </div>
