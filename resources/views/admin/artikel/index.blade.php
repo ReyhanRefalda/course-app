@@ -3,10 +3,10 @@
                 ARTIKEL</b></span>
     </h1>
     <div class="w-full flex justify-between items-center mb-4 space-x-4">
-        <a href="{{ route('admin.artikel.create') }}"
-            class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 ease-in-out">
-            Tambah Artikel
-        </a>
+        <button type="button" id="createProductModalButton" data-modal-target="createProductModal"
+            data-modal-toggle="createProductModal"
+            class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Tambah
+            Artikel</button>
         <div class="w-full max-w-md">
             <form action="{{ route('admin.artikel.index') }}" me thod="GET">
                 <div class="flex items-center space-x-2">
@@ -51,68 +51,260 @@
         </div>
     @endif
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg grid grid-cols-1 gap-4">
+    <div class="grid grid-cols-3 gap-4">
         @foreach ($artikels as $artikel)
             <div
-                class="relative group bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl hover:bg-opacity-75 transition-all duration-300">
-                <div
-                    class="overlay-layer w-full absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                class="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                <div class="relative">
+                    <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
+                        alt="Artikel Thumbnail" class="w-full h-48 object-cover">
                     <div
-                        class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 [&>a]:w-8 [&>a]:mr-4">
-                        <a href="{{ route('admin.artikel.show', $artikel->id) }}">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVR4nO2U2SqFURTHP7cOx5QhUrhwbXgJlBcwJ4qT4S3wEqZcGl5AUhwSZQgXphBFuDPFzU+7/l+tdqfzHcOlVau+77+mvf577RUE//IbAXKAXmAJuAbepVfAItADxH6SOAsYAp6Ilkcg4WIyTV4JrJoEuypWB+RL64FhYM/4rQAVUclrgAsF3AFdGRyoFbhRjKOuNl3yezluAcWGrm5gA3iRJl3xkBagFNhWrMtR7SfPA47lsA5kG9t0Gv6njF9Mh3ByBMRtgTkZToACg3cIfwb6dNIyoF+Yk3bjXwicCZ8JwRYBH+4ivc42ZBtMQemgbEkPbwA+ZWsO1I6TsRRJXmUrSWErke0lhW08pMoWGP/DAhO2QLN+XFv136AoEQ6FhzcaippCcFbAqbso49zuXXJcai+5zfgXAefCp23VuKEqafcLMJVmTCe9Md0Ufgjk+i1Xm4fmHk2p8CyN67pO7XRN3YUPzY3ujtkAVT6ltkjY4v03VsVt5KowARVaXKHsAyOa7wKp+x4FDozfMlAedaDA0JLQKo6SB2Ag43XtFYppqS0Al8Cb1H3PA512b/1L8BP5AgqUrtNYKIXyAAAAAElFTkSuQmCC"
-                                alt="visible">
-                        </a>
-                        <a href="{{ route('admin.artikel.edit', $artikel->id) }}">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB9UlEQVR4nO3ZT6tNURjH8Y0YUG7K4EQkf2b+lMxIKZkZue4bIHKvG0rGRDkMFJnIgDJjIO+ACWXkBZAZRqJLJq6PTq2T3bnXdc7aa+991PrWqtOp51m/73nWbp/dLopMJpPJJAATOIvzWF/8j2AL3vnDR+ys2nQFpnAfj4dYpxOInLSQT+jENuzgtdF4U0FgE9aEz70jNcjVmKbL8TI0eIsZHMHhf6xOheP0Hs+XkLkZ0/hoKO41n4gJFyHRpyxzIXw3h20xzW+FBpfqCL+ERJ8XJZlZHIzd4GFoOJk6/BASC2SqbNIXOZYs+WgSPb5h39iKYPPAfWIxvuNQis1qEWlUoi6RxiXqEGlFIrVIaxIpRVqVSCXSukQKkbGQqCqCjUPc7Oai/3Y0KLIKT1udRFURrC3JPGttEglELvefGxaZTHOTSCDyKtQNyjQvESuCdfhZmsC1ksyeog3EiUyWJD6EHhsSZNmPLzjelMgJXMRuLBt507+A6ZDlRjFuD1YjZpnOIvJE0iMfrSJf7GN5tB6E4qla0o2WZTZk6cYUd0PxlVrSjZblXshyLqb4QCj+jK21JBwux178wDx2xDZ5EmS+4i7O4FRDaya8XOpJ9LhT5ddYjUf4pT3mcRsro0VKQrvCe4pug+t6uMi3VxbIZDKZYtz4DYgdKmLD/YA5AAAAAElFTkSuQmCC"
-                                alt="external-edit-interface-kiranshastry-solid-kiranshastry">
-                        </a>
-                        <form action="{{ route('admin.artikel.destroy', $artikel->id) }}" method="POST"
-                            onsubmit="return confirm('Apakah anda yakin ingin menghapus artikel ini?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="w-8">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABhElEQVR4nO2UzyvDcRzGlx8lsVZbU1JWWglHSpLkJGc1/AVqaddJcl+J+QOUEyH5C2Q5SaSWkpWWdsDJcuPwlnrF2/psbW+TZZ7j63me957vvmsez78qkJQpz58dUB+SH1btD6gpiYjv126ISI5vrb2AB0p0vnjvXW7kLAMylMMO5nfk/XgZxcKwG8uAE8qjil3ABh35IbxzxcZgKcuAXcrTiu3DIo78DN6eYhHYtmVAknJUsQQs7sjH8RKKLcDWLAOWKC8rFoMlHfkNvJhiK7BFy4Ao5VXFZmE7JV7Zx+sRkXXYvGXAHOVNxSZgR458Cm9csa1iv5lyBkxRPlBsAJZ25K/w+hU7hE1aBowUPq2IhGC3jnwWr1uxY9iwZUAf5VPFOmD3jvwDXlCxM1ivZUAP5UvFvLC8I/+M16ZYGhayDOiifK1YM+zFkX/Fa3L8dXdaBgQpZysuf96440bAUvYVe98V3HjkhtdSbqX89I0BeW60WMqNUj01WJ+gKjJ9+L/qRm80/hWTS4Xl4gAAAABJRU5ErkJggg=="
-                                    alt="trash">
+                        class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-70 flex items-center justify-center transition duration-300">
+                        <div class="flex gap-2 opacity-0 hover:opacity-100">
+                            <!-- Show Button -->
+                            <a href="{{ route('admin.artikel.show', $artikel->id) }}" class="w-10">
+                                <img src="{{ asset('aset/show-icon.png') }}" alt="Show">
+                            </a>
+                            <!-- Edit Button -->
+                            <button type="button" data-modal-target="updateProductModal-{{ $artikel->id }}"
+                                data-modal-toggle="updateProductModal-{{ $artikel->id }}">
+                                <img src="{{ asset('aset/edit-icon.png') }}" alt="Edit" class="w-10">
                             </button>
-                        </form>
+                            <!-- Delete Button -->
+                            <button type="button" data-modal-target="deleteModal-{{ $artikel->id }}"
+                                data-modal-toggle="deleteModal-{{ $artikel->id }}">
+                                <img src="{{ asset('aset/delete-icon.png') }}" alt="Delete" class="w-10">
+                            </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-[1fr_4fr]">
-                    <div class="relative">
-                        <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
-                            alt="Artikel" class="h-full w-full object-cover aspect-[1/1]" />
-
-                        <div
-                            class="overlay-layer w-full absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <h2 class="text-2xl font-bold text-gray-800">{{ $artikel->title }}</h2>
-
-                        <p class="text-sm text-gray-500 mt-2">
-                            Ditulis oleh <span class="font-semibold">{{ $artikel->user->nama }}</span>
-                            pada <span
-                                class="font-semibold">{{ $artikel->created_at->isoFormat('dddd, D MMMM Y') }}</span>
-                        </p>
-
-                        <p class="mt-4 text-gray-700 line-clamp-3">{{ $artikel->description }}</p>
-
-                        <span
-                            class="inline-block mt-4 px-3 py-1 text-xs font-bold rounded
-                            {{ $artikel->status == 'publish' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
-                            {{ ucfirst($artikel->status) }}
-                        </span>
-                    </div>
+                <div class="p-4">
+                    <h2 class="text-xl font-bold text-gray-800">{{ $artikel->title }}</h2>
+                    <p class="text-gray-600 text-sm mt-1">
+                        Ditulis oleh <span class="font-semibold">{{ $artikel->user->nama }}</span>
+                        pada <span class="font-semibold">{{ $artikel->created_at->isoFormat('dddd, D MMMM Y') }}</span>
+                    </p>
+                    <p class="mt-2 text-gray-700 line-clamp-3">{{ $artikel->description }}</p>
+                    <span
+                        class="mt-4 inline-block px-3 py-1 text-xs font-bold rounded
+                    {{ $artikel->status == 'publish' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
+                        {{ ucfirst($artikel->status) }}
+                    </span>
                 </div>
             </div>
         @endforeach
     </div>
 
-
     <div class="py-4">
         {!! $artikels->links() !!}
     </div>
+
+    <!-- Create modal -->
+    <div id="createProductModal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
+                <!-- Modal header -->
+                <div
+                    class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-800">Tambah Artikel</h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-target="createProductModal" data-modal-toggle="createProductModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form action="{{ route('admin.artikel.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                    <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label for="title" class="block text-gray-800 font-semibold">Judul</label>
+                                <input type="text" name="title" id="title" value="{{ old('title') }}"
+                                    class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    autofocus>
+                                <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="description" class="block text-gray-800 font-semibold">Ringkasan</label>
+                                <input type="text" name="description" id="description" value="{{ old('description') }}"
+                                    class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="content" class="block text-gray-800 font-semibold">Isi
+                                    Artikel</label>
+                                <input id="x" type="hidden" name="content">
+                                <trix-editor input="x"
+                                    class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80"> {!! old('content') !!} </trix-editor>
+                                <x-input-error class="mt-2" :messages="$errors->get('content')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="status" class="block text-gray-800 font-semibold">Status</label>
+                                <select name="status" id="status"
+                                    class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
+                                    <option value="publish" {{ old('status') == 'publish' ? 'selected' : '' }}>Publish</option>
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="tumbnail" class="block text-gray-800 font-semibold">Tumbnail</label>
+                                <input type="file" name="tumbnail" id="tumbnail" value="{{ old('tumbnail') }}"
+                                    class="w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <x-input-error class="mt-2" :messages="$errors->get('tumbnail')" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Simpan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update modal -->
+    @foreach ($artikels as $artikel)
+        <div id="updateProductModal-{{ $artikel->id }}" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
+                    <!-- Modal header -->
+                    <div
+                        class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-800">Edit Artikel</h3>
+                        <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="updateProductModal-{{ $artikel->id }}">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form action="{{ route('admin.artikel.update', $artikel->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="flex flex-col gap-6">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col gap-2">
+                                    <label for="title" class="block text-gray-800 font-semibold">Judul</label>
+                                    <input type="text" name="title" id="title"
+                                        value="{{ old('title', $artikel->title) }}"
+                                        class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        autofocus>
+                                    <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="description"
+                                        class="block text-gray-800 font-semibold">Ringkasan</label>
+                                    <input type="text" name="description" id="description"
+                                        value="{{ old('description', $artikel->description) }}"
+                                        class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="content" class="block text-gray-800 font-semibold">Isi
+                                        Artikel</label>
+                                    <input id="x" type="hidden" name="content">
+                                    <trix-editor input="x"
+                                        class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">{!! old('content', $artikel->content) !!}</trix-editor>
+                                    <x-input-error class="mt-2" :messages="$errors->get('content')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="status" class="block text-gray-800 font-semibold">Status</label>
+                                    <select name="status" id="status"
+                                        class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="draft"
+                                            {{ old('status', $artikel->status) == 'draft' ? 'selected' : '' }}>
+                                            Draft</option>
+                                        <option value="publish"
+                                            {{ old('status', $artikel->status) == 'publish' ? 'selected' : '' }}>
+                                            Publish</option>
+                                    </select>
+                                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="tumbnail" class="block text-gray-800 font-semibold">Tumbnail</label>
+                                    <input type="file" name="tumbnail" id="tumbnail"
+                                        class="w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    @isset($artikel->tumbnail)
+                                        <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
+                                            alt="Artikel Thumbnail" class="w-full h-48 object-cover rounded-lg">
+                                    @endisset
+                                    <x-input-error class="mt-2" :messages="$errors->get('tumbnail')" />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Simpan Perubahan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    <!-- Delete modal -->
+    @foreach ($artikels as $artikel)
+        <div id="deleteModal-{{ $artikel->id }}" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
+                    <button type="button"
+                        class="text-gray-700 absolute top-2.5 right-2.5 bg-transparent hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  dark:hover:text-gray-900"
+                        data-modal-toggle="deleteModal-{{ $artikel->id }}">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <svg class="text-gray-400 dark:text-red-500 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <p class="mb-4 text-gray-500 dark:text-gray-800">Apakah anda yakin untuk menghapus artikel ini?</p>
+                    <div class="flex justify-center items-center space-x-4">
+                        <button data-modal-toggle="deleteModal-{{ $artikel->id }}" type="button"
+                            class="py-2 px-3 text-sm font-medium text-white bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-white-900 focus:z-10 dark:bg-blue-500 dark:text-white dark:border-blue-500 dark:hover:text-white dark:hover:bg-blue-800 dark:focus:ring-blue-800">Batalkan</button>
+                        <form action="{{ route('admin.artikel.destroy', $artikel->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="flex items-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200">
+                                Hapus
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 </x-admin>
