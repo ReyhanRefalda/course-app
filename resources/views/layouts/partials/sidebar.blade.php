@@ -17,42 +17,67 @@
                         <span>MASTER</span>
                     </li>
 
+                    <!-- Dashboard -->
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('dashboard') }}">
                             <i class="ti ti-layout-dashboard  text-xl"></i> <span>Dashboard</span>
                         </a>
                     </li>
+
+                    <!-- Daftar User, hanya bisa diakses oleh yang memiliki izin 'manage user' -->
+                    @can('manage user')
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
-                            href="{{ route('admin.users.index') }}">
+                            href="{{ route('admin.user.index') }}">
                             <i class="ti ti-user  text-xl"></i> <span>Daftar User</span>
                         </a>
                     </li>
+                    @endcan
+
+                    <!-- Daftar Artikel, hanya bisa diakses oleh yang memiliki izin 'manage artikel' -->
+                    @can('manage artikel')
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.artikel.index') }}">
                             <i class="ti ti-news  text-xl"></i> <span>Daftar Artikel</span>
                         </a>
                     </li>
+                    @endcan
+
+                    <!-- Daftar Kursus, hanya bisa diakses oleh yang memiliki izin 'manage kursus' -->
+                    @can('manage kursus')
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.kursus.index') }}">
-                            <i class="ti ti-news  text-xl"></i> <span>Daftar Kursus</span>
+                            <i class="ti ti-school text-xl"></i>
+                            <span>Daftar Kursus</span>
                         </a>
                     </li>
+                    @endcan
+
+                    <!-- Daftar Modul, hanya bisa diakses oleh yang memiliki izin 'manage modul' -->
+                    @can('manage modul')
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.modul.index') }}">
-                            <i class="ti ti-news  text-xl"></i> <span>Daftar Modul</span>
+                            <i class="ti ti-folder text-xl"></i>
+                            <span>Daftar Modul</span>
                         </a>
                     </li>
+                    @endcan
+
+                    <!-- Daftar Pelajaran, hanya bisa diakses oleh yang memiliki izin 'manage pelajaran' -->
+                    @can('manage pelajaran')
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.pelajaran.index') }}">
-                            <i class="ti ti-news  text-xl"></i> <span>Daftar Pelajaran</span>
+                            <i class="ti ti-notebook text-xl"></i>
+                            <span>Daftar Pelajaran</span>
                         </a>
                     </li>
+                    @endcan
+
                 </ul>
             </nav>
         </div>

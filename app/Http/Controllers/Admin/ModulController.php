@@ -12,8 +12,9 @@ class ModulController extends Controller
 {
     public function index()
     {
+        $pelajarans = Pelajaran::doesntHave('modul')->get();
         $moduls = Modul::with(['pelajaran', 'kursus'])->get();
-        return view('admin.modul.index', compact('moduls'));
+        return view('admin.modul.index', compact('moduls', 'pelajarans'));
     }
 
     public function create()
@@ -39,34 +40,31 @@ class ModulController extends Controller
 
     public function edit($id)
     {
-        $modul = Modul::with('pelajaran')->findOrFail($id); 
+        $modul = Modul::with('pelajaran')->findOrFail($id);
         $pelajarans = Pelajaran::all(); // Ambil semua pelajaran tanpa filter
-    
+
         return view('admin.modul.edit', compact('modul', 'pelajarans'));
     }
-    
+
 
     public function update(ModulRequest $request, $id)
     {
         $modul = Modul::findOrFail($id);
 
-        // Update data modul
         $modul->update([
             'judul' => $request->judul,
         ]);
 
-        // Hapus pelajaran yang tidak lagi terkait dengan modul ini
         Pelajaran::where('modul_id', $modul->id)
             ->whereNotIn('id', $request->pelajaran)
             ->update(['modul_id' => null]);
 
-        // Tambahkan pelajaran yang baru ke modul ini
         Pelajaran::whereIn('id', $request->pelajaran)
             ->update(['modul_id' => $modul->id]);
 
         return redirect()->route('admin.modul.index')->with('success', 'Modul berhasil diperbarui!');
     }
-    
+
 
 
     public function destroy($id)

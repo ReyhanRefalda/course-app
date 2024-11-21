@@ -1,5 +1,5 @@
 <x-admin>
-    <div class="p-6 bg-gradient-to-r from-gray-100 via-white to-gray-100 min-h-screen">
+    <div class="p-6 bg-gradient-to-r via-white to-gray-100 min-h-screen">
 
         <!-- Header -->
         <div
@@ -182,6 +182,6 @@
             }
         }
 
-       
+
     </script>
 </x-admin>
