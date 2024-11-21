@@ -14,19 +14,20 @@ use App\Http\Controllers\User\KomentarController as UserKomentarController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
 
-// Route utama untuk halaman depan
+
 Route::get('/', function () {
     return view('home');
 });
+Route::get('/artikel', [UserArtikelController::class, 'index'])->name('user.artikel.index'); // Daftar artikel
 
-// Route untuk autentikasi dan pengaturan profil
+require __DIR__ . '/auth.php';
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route utama untuk dashboard yang mengarahkan sesuai role
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         // Cek peran pengguna dan arahkan ke controller yang sesuai
@@ -49,9 +50,6 @@ Route::middleware(['auth', AdminMiddleware::class])->prefix('admin')->name('admi
 });
 
 // Route User
-Route::middleware(['auth', UserMiddleware::class])->prefix('user')->name('user.')->group(function () {
-    Route::get('/artikel', [UserArtikelController::class, 'index'])->name('artikel.index'); // Daftar artikel
-    Route::get('/artikel/{id}', [UserArtikelController::class, 'show'])->name('artikel.show'); // Detail artikel
-});
+Route::middleware(['auth', UserMiddleware::class])->group(function () {});
 
-require __DIR__ . '/auth.php';
+Route::get('/{slug}', [UserArtikelController::class, 'detail'])->name('user.artikel.show'); // Detail

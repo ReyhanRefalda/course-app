@@ -50,6 +50,7 @@ class ArtikelController extends Controller
             'tumbnail.image' => 'Hanya gambar yang dibolehkan',
             'tumbnail.mimes' => 'Gambar harus berupa file gambar (jpeg, png, jpg, svg, gif, webp)',
             'tumbnail.max' => 'Gambar tidak boleh lebih besar dari 10MB',
+            'tumbnail.required' => 'Gambar wajib diisi',
         ]);
 
         if ($request->hasFile('tumbnail')) {
@@ -71,7 +72,7 @@ class ArtikelController extends Controller
 
         Artikel::create($data);
 
-        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diupdate!');
+        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil ditambah!');
     }
 
     /**
@@ -100,7 +101,7 @@ class ArtikelController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'tumbnail' => 'image|mimes:jpeg,png,jpg,svg,gif,webp|max:10240',
+            'tumbnail' => 'nullable|image|mimes:jpeg,png,jpg,svg,gif,webp|max:10240',
         ], [
             'title.required' => 'Judul wajib diisi',
             'content.required' => 'Isi wajib diisi',
@@ -130,7 +131,7 @@ class ArtikelController extends Controller
 
         Artikel::where('id', $artikel->id)->update($data);
 
-        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil ditambah!');
+        return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diupdate!');
     }
 
     /**
