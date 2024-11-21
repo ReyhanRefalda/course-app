@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('modul', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
-            $table->foreignId('pelajaran_id')->constrained('pelajaran');
+            $table->foreignId('kursus_id')->nullable()->constrained('kursus')->onDelete('set null'); // Nullable // Nullable
             $table->timestamps();
         });
     }

@@ -57,6 +57,9 @@
                         Judul
                     </th>
                     <th scope="col" class="px-6 py-3">
+                       Modul
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Deskripsi
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -72,40 +75,37 @@
             </thead>
             <tbody>
                 @foreach ($kursus as $item)
-                    <tr
-                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 [&>td]:max-h-[20px]">
-                        <td scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $loop->iteration }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->judul }}
-                        </td>
-                        <td class="px-6 py-4 break-words whitespace-normal">
-                            {{ Str::limit($item->deskripsi, 50, '...') }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->harga }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $item->created_at->isoFormat('dddd, D MMMM Y') }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{{ route('admin.kursus.edit', $item->id) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            {{-- link show with slug --}}
-                            {{-- <a href="{{ route('admin.kursus.show', $item->slug) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Show</a> --}}
-                            <form action="{{ route('admin.kursus.destroy', $item->id) }}" method="POST"
-                                onsubmit="return confirm('Apakah anda yakin ingin menghapus kursus ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 [&>td]:max-h-[20px]">
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ $loop->iteration }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item->judul }}  
+                    </td>
+                    <td class="px-6 py-4">
+                        {{-- Menampilkan Nama Modul --}}
+                        {{ $item->modul->pluck('judul')->join(', ') }}
+
+                    </td>
+                    <td class="px-6 py-4 break-words whitespace-normal">
+                        {{ Str::limit($item->deskripsi, 50, '...') }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item->harga }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item->created_at ? $item->created_at->isoFormat('dddd, D MMMM Y') : 'Tanggal tidak tersedia' }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <a href="{{ route('admin.kursus.edit', $item->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <form action="{{ route('admin.kursus.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Apakah anda yakin ingin menghapus kursus ini?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </div>
