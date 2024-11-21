@@ -22,8 +22,8 @@ class ModulRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'judul' => 'required|string|max:255',
-            'pelajaran' => 'required|array', // Pelajaran harus berupa array
+            'judul' => 'required|string|max:30|regex:/^[a-zA-Z0-9\s\-\_,\.\!\?\(\)\?!]+$/|min:3',
+            'pelajaran' => 'required|array|min:1', // Pelajaran harus berupa array
             'pelajaran.*' => 'exists:pelajaran,id',
         ];
     }
@@ -32,9 +32,12 @@ class ModulRequest extends FormRequest
     {
         return [
             'judul.required' => 'Judul modul harus diisi.',
-            'judul.string' => 'Judul modul harus berupa teks.',
-            'judul.max' => 'Judul modul maksimal 255 karakter.',
-            'pelajaran.required' => 'Pilih pelajaran yang akan ditambahkan.',
+            'judul.string' => 'Judul modul harus berupa huruf dan angka.',
+            'judul.max' => 'Judul modul maksimal 30 karakter.',
+            'judul.min' => 'Judul modul minimal 3 karakter.',
+            'judul.regex' => 'Judul hanya boleh mengandung huruf, angka, spasi, dan beberapa simbol',
+
+            'pelajaran.required' => 'Minimal pilih 1 pelajaran.',
             'pelajaran.array' => 'Pelajaran harus berupa array.',
             'pelajaran.*.exists' => 'Setiap pelajaran yang dipilih harus valid.',
         ];

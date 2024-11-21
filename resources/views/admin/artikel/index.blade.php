@@ -253,11 +253,19 @@
                                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="content" class="block text-gray-800 font-semibold">Isi
-                                        Artikel</label>
-                                    <input id="x" type="hidden" name="content">
-                                    <trix-editor input="x"
-                                        class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">{!! old('content', $artikel->content) !!}</trix-editor>
+                                    <label for="content" class="block text-gray-800 font-semibold">Isi Artikel</label>
+                                
+                                    <!-- Input Hidden -->
+                                    <input id="x" type="hidden" name="content" value="{!! old('content', $artikel->content) !!}">
+                                    <pre>{!! old('content', $artikel->content) !!}</pre>
+                                
+                                    <!-- Trix Editor -->
+                                    <trix-editor 
+                                        input="x" 
+                                        class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">
+                                    </trix-editor>
+                                
+                                    <!-- Error Messages -->
                                     <x-input-error class="mt-2" :messages="$errors->get('content')" />
                                 </div>
                                 <div class="flex flex-col gap-2">
@@ -336,4 +344,25 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ambil elemen input hidden dan editor
+            const hiddenInput = document.getElementById("x");
+            const trixEditor = document.querySelector("trix-editor");
+    
+            // Debug nilai hidden input
+            console.log("Hidden Input Value:", hiddenInput.value);
+    
+            // Isi editor dengan nilai lama
+            if (hiddenInput.value) {
+                trixEditor.editor.loadHTML(hiddenInput.value);
+            }
+    
+            // Sinkronisasi perubahan dari editor ke hidden input
+            trixEditor.addEventListener("trix-change", function () {
+                hiddenInput.value = trixEditor.editor.getDocument().toString();
+            });
+        });
+    </script>
 </x-admin>

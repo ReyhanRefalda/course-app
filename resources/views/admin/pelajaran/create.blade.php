@@ -17,7 +17,7 @@
                         <label for="judul" class="block text-sm font-medium text-gray-700">Judul</label>
                         <input type="text" name="judul" id="judul" 
                             class="p-3 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('judul') border-red-500 @enderror"
-                            value="{{ old('judul') }}" placeholder="Masukkan judul pelajaran" required>
+                            value="{{ old('judul') }}" placeholder="Masukkan judul pelajaran">
                         @error('judul')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
@@ -26,9 +26,9 @@
                     <!-- Input Video URL -->
                     <div class="flex flex-col gap-2">
                         <label for="video_url" class="block text-sm font-medium text-gray-700">Video URL</label>
-                        <input type="url" name="video_url" id="video_url" 
+                        <input type="text" name="video_url" id="video_url" 
                             class="p-3 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('video_url') border-red-500 @enderror"
-                            value="{{ old('video_url') }}" placeholder="Masukkan URL video" required>
+                            value="{{ old('video_url') }}" placeholder="Masukkan URL video">
                         @error('video_url')
                             <span class="text-sm text-red-500">{{ $message }}</span>
                         @enderror
