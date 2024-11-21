@@ -1,4 +1,5 @@
 <x-admin>
+
     <h1 class="text-lg mb-4 text-gray-500 text-start">DASHBOARD ADMIN <span class="text-gray-900"><b>/ DAFTAR
                 PELAJARAN</b></span>
     </h1>
@@ -23,6 +24,7 @@
                 </div>
             </form>
         </div>
+
     </div>
 
     @if (session('success'))
