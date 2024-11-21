@@ -9,15 +9,14 @@ use App\Http\Controllers\Admin\ArtikelController as AdminArtikelController;  // 
 use App\Http\Controllers\Admin\KursusController as AdminKursusController;  // ArtikelController for admin
 use App\Http\Controllers\User\ArtikelController as UserArtikelController;  // ArtikelController for user
 use App\Http\Controllers\Admin\KomentarController as AdminKomentarController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\KursusController;
 use App\Http\Controllers\User\KomentarController as UserKomentarController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\UserMiddleware;
 
 // Route utama untuk halaman depan
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
 
 // Route untuk autentikasi dan pengaturan profil
 Route::middleware('auth')->group(function () {
