@@ -75,7 +75,6 @@
                                 data-modal-toggle="deleteModal-{{ $artikel->id }}">
                                 <img src="{{ asset('aset/delete-icon.png') }}" alt="Delete" class="w-10">
                             </button>
-                            </form>
                         </div>
                     </div>
                 </div>

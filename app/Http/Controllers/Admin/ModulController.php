@@ -11,8 +11,9 @@ class ModulController extends Controller
 {
     public function index()
     {
+        $pelajarans = Pelajaran::doesntHave('modul')->get();
         $moduls = Modul::with(['pelajaran', 'kursus'])->get();
-        return view('admin.modul.index', compact('moduls'));
+        return view('admin.modul.index', compact('moduls', 'pelajarans'));
     }
 
     public function create()
@@ -25,8 +26,8 @@ class ModulController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:255',
-            'pelajaran' => 'required|array', 
-            'pelajaran.*' => 'exists:pelajaran,id', 
+            'pelajaran' => 'required|array',
+            'pelajaran.*' => 'exists:pelajaran,id',
         ]);
 
         // Buat Modul
@@ -34,50 +35,50 @@ class ModulController extends Controller
             'judul' => $request->judul,
         ]);
 
-       
+
         Pelajaran::whereIn('id', $request->pelajaran)
-            ->update(['modul_id' => $modul->id]); 
+            ->update(['modul_id' => $modul->id]);
 
         return redirect()->route('admin.modul.index')->with('success', 'Modul berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
-        $modul = Modul::with('pelajaran')->findOrFail($id); 
+        $modul = Modul::with('pelajaran')->findOrFail($id);
         $pelajarans = Pelajaran::all(); // Ambil semua pelajaran tanpa filter
-    
+
         return view('admin.modul.edit', compact('modul', 'pelajarans'));
     }
-    
+
 
     public function update(Request $request, $id)
     {
         $modul = Modul::findOrFail($id);
-    
-     
+
+
         $request->validate([
             'judul' => 'required|string|max:255',
-            'pelajaran' => 'required|array', 
-            'pelajaran.*' => 'exists:pelajaran,id', 
+            'pelajaran' => 'required|array',
+            'pelajaran.*' => 'exists:pelajaran,id',
         ]);
-    
-      
+
+
         $modul->update([
             'judul' => $request->judul,
         ]);
-    
-        
+
+
         Pelajaran::where('modul_id', $modul->id)
             ->whereNotIn('id', $request->pelajaran)
             ->update(['modul_id' => null]);
-    
-       
+
+
         Pelajaran::whereIn('id', $request->pelajaran)
             ->update(['modul_id' => $modul->id]);
-    
+
         return redirect()->route('admin.modul.index')->with('success', 'Modul berhasil diperbarui!');
     }
-    
+
 
 
     public function destroy($id)

@@ -50,7 +50,8 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.kursus.index') }}">
-                            <i class="ti ti-news  text-xl"></i> <span>Daftar Kursus</span>
+                            <i class="ti ti-school text-xl"></i>
+                            <span>Daftar Kursus</span>
                         </a>
                     </li>
                     @endcan
@@ -60,7 +61,8 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.modul.index') }}">
-                            <i class="ti ti-news  text-xl"></i> <span>Daftar Modul</span>
+                            <i class="ti ti-folder text-xl"></i>
+                            <span>Daftar Modul</span>
                         </a>
                     </li>
                     @endcan
@@ -70,7 +72,8 @@
                     <li class="sidebar-item">
                         <a class="sidebar-link gap-3 py-2 px-3  rounded-md  w-full flex items-center hover:text-blue-100 hover:bg-blue-500"
                             href="{{ route('admin.pelajaran.index') }}">
-                            <i class="ti ti-news  text-xl"></i> <span>Daftar Pelajaran</span>
+                            <i class="ti ti-notebook text-xl"></i>
+                            <span>Daftar Pelajaran</span>
                         </a>
                     </li>
                     @endcan
