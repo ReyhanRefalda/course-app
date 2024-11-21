@@ -45,7 +45,7 @@ class RolePermissionSeeder extends Seeder
         $mentorRole->syncPermissions($mentorPermission);
 
         $siswaRole = Role::firstOrCreate([
-            'name' => 'mentor'
+            'name' => 'siswa'
         ]);
 
         $siswaPermission = [
