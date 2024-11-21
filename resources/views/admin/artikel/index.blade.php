@@ -75,7 +75,6 @@
                                 data-modal-toggle="deleteModal-{{ $artikel->id }}">
                                 <img src="{{ asset('aset/delete-icon.png') }}" alt="Delete" class="w-10">
                             </button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -138,7 +137,8 @@
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label for="description" class="block text-gray-800 font-semibold">Ringkasan</label>
-                                <input type="text" name="description" id="description" value="{{ old('description') }}"
+                                <input type="text" name="description" id="description"
+                                    value="{{ old('description') }}"
                                     class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
                             </div>
@@ -147,15 +147,18 @@
                                     Artikel</label>
                                 <input id="x" type="hidden" name="content">
                                 <trix-editor input="x"
-                                    class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80"> {!! old('content') !!} </trix-editor>
+                                    class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">
+                                    {!! old('content') !!} </trix-editor>
                                 <x-input-error class="mt-2" :messages="$errors->get('content')" />
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label for="status" class="block text-gray-800 font-semibold">Status</label>
                                 <select name="status" id="status"
                                     class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
-                                    <option value="publish" {{ old('status') == 'publish' ? 'selected' : '' }}>Publish</option>
+                                    <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="publish" {{ old('status') == 'publish' ? 'selected' : '' }}>Publish
+                                    </option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('status')" />
                             </div>
