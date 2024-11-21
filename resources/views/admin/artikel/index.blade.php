@@ -227,13 +227,19 @@
                                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="content" class="block text-gray-800 font-semibold">Isi
-                                        Artikel</label>
-                                    <input id="x" type="hidden" name="content">
-                                    <trix-editor input="x"
-                                        class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">{!! old('content', $artikel->content) !!}</trix-editor>
+                                    <label for="content" class="block text-gray-800 font-semibold">
+                                        Isi Artikel
+                                    </label>
+                                    <!-- Elemen input hidden untuk Trix -->
+                                    <input id="x-{{ $artikel->id }}" type="hidden" name="content"
+                                        value="{!! old('content', $artikel->content) !!}">
+                                    <trix-editor input="x-{{ $artikel->id }}"></trix-editor>
+
+
+                                    <!-- Error message -->
                                     <x-input-error class="mt-2" :messages="$errors->get('content')" />
                                 </div>
+                              
                                 <div class="flex flex-col gap-2">
                                     <label for="status" class="block text-gray-800 font-semibold">Status</label>
                                     <select name="status" id="status"
