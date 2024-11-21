@@ -9,15 +9,21 @@ class ArtikelController extends Controller
 {
     public function index()
     {
-        $artikels = Artikel::where('status', 'publish')->orderBy('id', 'desc')->paginate(3);
-        return view('user.artikel.index', compact('artikels'));
+        $lastData = $this->lastData();
+
+        $artikels = Artikel::where('status', 'publish')->where('id', '!=', $lastData->id)->orderBy('id', 'desc')->paginate(10);
+        return view('user.artikel.index', compact('artikels', 'lastData'));
     }
 
-    public function show($id)
+    public function detail($slug)
     {
-        $artikel = Artikel::with('user')->findOrFail($id); // Pastikan relasi user dimuat
-        return view('user.artikel.show', compact('artikel'));
+        $artikels = Artikel::where('status', 'publish')->where('slug', $slug)->firstOrFail();
+        return view('user.artikel.show', compact('artikels'));
     }
 
-
+    public function lastData()
+    {
+        $artikels = Artikel::where('status', 'publish')->orderBy('id', 'desc')->latest()->first();
+        return $artikels;
+    }
 }
