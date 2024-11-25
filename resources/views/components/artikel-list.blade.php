@@ -1,5 +1,5 @@
 @props(['title', 'date', 'user', 'link', 'image'])
-<div class="mt-6">
+<div>
     <div class="min-h-[340px] bg-white rounded-lg shadow overflow-hidden">
         <a href="{{ $link }}">
             <img src="{{ $image }}"
@@ -11,7 +11,7 @@
                 <h3 class="text-[1.3rem] font-bold">{{ $title }}</h3>
             </a>
             <div class="flex justify-between">
-                <p class="text-sm text-gray-800">By {{ $user }}</p>
+                <p class="text-sm text-gray-800 font-semibold">By {{ $user }}</p>
                 <p class="text-sm text-gray-800">{{ $date }}</p>
             </div>
         </div>

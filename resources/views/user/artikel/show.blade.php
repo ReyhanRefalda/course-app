@@ -6,8 +6,10 @@
                 <header class="mb-4 lg:mb-6 not-format">
                     <address class="flex items-center mb-6 not-italic">
                         <div class="inline-flex items-center mr-3 text-sm text-gray-900">
-                            <img class="mr-4 w-10 h-10 rounded-full"
-                                src="{{ asset('storage/avatar/' . Auth::user()->avatar) }}" alt="Jese Leos">
+                            @isset(Auth::user()->avatar)
+                                <img class="mr-4 w-10 h-10 rounded-full"
+                                    src="{{ asset('storage/avatar/' . Auth::user()->avatar) }}" alt="Jese Leos">
+                            @endisset
                             <div>
                                 <a href="#" rel="author"
                                     class="text-lg font-bold text-gray-900">{{ $artikels->user->nama }}</a>
@@ -95,7 +97,7 @@
 
             {{-- <aside>
                 <div class="space-y-6">
-                    @foreach ($artikels as $artikel)
+                    @foreach ($sidebarArtikel as $artikel)
                         <div class="flex items-center space-x-4">
                             <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
                                 class="w-20 h-20 object-cover rounded-lg" alt="Concert">

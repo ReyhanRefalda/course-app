@@ -6,6 +6,7 @@ use App\Models\Modul;
 use App\Models\Kursus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KursusRequest;
 use Illuminate\Support\Facades\Auth;
 
 class KursusController extends Controller
@@ -16,16 +17,17 @@ class KursusController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $moduls = Modul::whereNull('kursus_id')->get();
         $search = $request->search;
 
-        
-        $kursus = Kursus::with('modul') 
+
+        $kursus = Kursus::with('modul')
             ->when($search, function ($query) use ($search) {
                 $query->where('judul', 'like', '%' . $search . '%');
             })
             ->get();
 
-        return view('admin.kursus.index', compact('kursus'));
+        return view('admin.kursus.index', compact('kursus', 'moduls'));
     }
 
 
@@ -34,7 +36,7 @@ class KursusController extends Controller
      */
     public function create()
     {
-        $moduls = Modul::whereNull('kursus_id')->get(); 
+        $moduls = Modul::whereNull('kursus_id')->get();
         return view('admin.kursus.create', compact('moduls'));
     }
 
@@ -42,15 +44,9 @@ class KursusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(KursusRequest $request)
     {
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga' => 'required|numeric|min:0',
-            'modul_id' => 'nullable|array',
-            'modul_id.*' => 'exists:modul,id',
-        ]);
+        $validated = $request->validated();
 
         $kursus = Kursus::create([
             'judul' => $validated['judul'],
@@ -79,7 +75,7 @@ class KursusController extends Controller
     {
         $kursus = Kursus::with('modul')->findOrFail($id);
         $moduls = Modul::whereNull('kursus_id')
-            ->orWhere('kursus_id', $kursus->id) 
+            ->orWhere('kursus_id', $kursus->id)
             ->get();
 
         return view('admin.kursus.edit', compact('kursus', 'moduls'));
@@ -89,28 +85,22 @@ class KursusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(KursusRequest $request, $id)
     {
         $kursus = Kursus::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'harga' => 'required|numeric|min:0',
-            'modul_id' => 'nullable|array',
-            'modul_id.*' => 'exists:modul,id',
-        ]);
+        $validatedData = $request->validated();
 
         $kursus->update($validatedData);
 
-      
+
         if (isset($validatedData['modul_id'])) {
             Modul::whereIn('id', $validatedData['modul_id'])->update(['kursus_id' => $kursus->id]);
             Modul::whereNotIn('id', $validatedData['modul_id'])
                 ->where('kursus_id', $kursus->id)
                 ->update(['kursus_id' => null]);
         } else {
-           
+
             Modul::where('kursus_id', $kursus->id)->update(['kursus_id' => null]);
         }
 

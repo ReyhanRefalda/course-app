@@ -11,7 +11,8 @@
         <div class="w-full max-w-md">
             <form action="#" me thod="GET">
                 <div class="flex items-center space-x-2">
-                    <input type="text" name="search" placeholder="Cari artikel" value="{{ request('search') }}"
+                    <input type="text" name="search" placeholder="Cari data pelajaran..."
+                        value="{{ request('search') }}"
                         class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-900 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out">
                     <button type="submit"
                         class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -56,7 +57,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($pelajarans as $pelajaran)
                 <div
-                    class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg border border-gray-200 transition transform hover:-translate-y-1">
+                    class="p-4 bg-white rounded-lg shadow-[5px_5px_10px_lightblue] hover:shadow-[0_5px_15px_skyblue] hover:translate-y-2 hover:translate-x-[-2px] border border-gray-200 transition duration-300 ease-in-out">
                     <h3 class="text-xl font-semibold mb-2">{{ $pelajaran->judul }}</h3>
                     <p class="text-sm text-gray-500">
                         <span class="text-sm font-semibold">Video URL:</span>
@@ -69,22 +70,16 @@
                     <div class="flex justify-center items-center gap-2">
                         <button type="button" data-modal-target="updateProductModal-{{ $pelajaran->id }}"
                             data-modal-toggle="updateProductModal-{{ $pelajaran->id }}"
-                            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-blue-600 text-white hover:bg-blue-700 ">
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-blue-600 text-white hover:bg-blue-700">
                             Edit
                         </button>
                         <button type="button" data-modal-target="deleteModal-{{ $pelajaran->id }}"
                             data-modal-toggle="deleteModal-{{ $pelajaran->id }}"
-                            class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-red-500 text-white hover:bg-red-600">
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-red-500 text-white hover:bg-red-600">
                             Hapus
                         </button>
                     </div>
                 </div>
-                {{-- <form action="{{ route('admin.pelajaran.destroy', $pelajaran->id) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger"
-                        onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-                </form> --}}
             @empty
                 <div class="col-span-full text-center text-gray-500">
                     Belum ada pelajaran.
@@ -256,7 +251,9 @@
                             class="d-inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                            <button type="submit"
+                                class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border border-transparent bg-red-500 text-white hover:bg-red-600">
+                                Hapus</button>
                         </form>
                     </div>
                 </div>
