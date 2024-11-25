@@ -197,16 +197,24 @@
                         </div>
 
                         <!-- Input Pelajaran dengan Select2 -->
-                        <div class="mb-4">
+                        <div class="flex flex-col mb-4">
                             <label for="pelajaran" class="block text-sm font-medium text-gray-700">Pelajaran</label>
-                            <select name="pelajaran[]" id="pelajaran" class="select2 w-full" multiple>
+                            <select name="pelajaran[]" id="pelajaran-{{ $modul->id }}" class="select2 w-full" multiple>
+                                {{-- Pelajaran yang belum digunakan --}}
                                 @foreach ($pelajarans as $pelajaran)
                                     <option value="{{ $pelajaran->id }}"
                                         {{ in_array($pelajaran->id, $modul->pelajaran->pluck('id')->toArray()) ? 'selected' : '' }}>
                                         {{ $pelajaran->judul }}
                                     </option>
                                 @endforeach
-                            </select>
+                            
+                                {{-- Pelajaran yang sudah terkait dengan modul ini tetapi tidak ada di pelajarans --}}
+                                @foreach ($modul->pelajaran as $pelajaran)
+                                    @if (!$pelajarans->contains($pelajaran))
+                                        <option value="{{ $pelajaran->id }}" selected>{{ $pelajaran->judul }}</option>
+                                    @endif
+                                @endforeach
+                            </select>                            
                         </div>
 
                         <!-- Tombol Aksi -->
