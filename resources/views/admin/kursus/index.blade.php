@@ -230,6 +230,11 @@
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
+
+                    {{-- Memuat CSS Select2 --}}
+                    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+                        rel="stylesheet" />
+
                     <!-- Modal body -->
                     <form action="{{ route('admin.kursus.update', $item->id) }}" method="POST">
                         @csrf
@@ -250,13 +255,20 @@
                         {{-- Form Pilihan Modul --}}
                         <div class="flex flex-col mb-4">
                             <label for="modul_id" class="block text-sm font-medium text-gray-700">Pilih Modul</label>
-                            {{-- <select id="modul_id" name="modul_id[]" multiple
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            {{-- <select name="modul_id[]" id="modul_id-{{ $item->id }}" class="select2 w-full"
+                                multiple>
                                 @foreach ($moduls as $modul)
                                     <option value="{{ $modul->id }}"
                                         {{ in_array($modul->id, $kursus->modul->pluck('id')->toArray()) ? 'selected' : '' }}>
                                         {{ $modul->judul }}
                                     </option>
+                                @endforeach
+
+                                @foreach ($kursus->moduls as $modul)
+                                    @if (!$modul->contains($modul))
+                                        <option value="{{ $modul->id }}" selected>{{ $modul->judul }}
+                                        </option>
+                                    @endif
                                 @endforeach
                             </select> --}}
                             <p class="text-sm text-gray-500 mt-1">Pilih satu atau lebih modul untuk kursus ini.</p>
@@ -296,6 +308,28 @@
                             </button>
                         </div>
                     </form>
+
+                    {{-- Memuat JS jQuery dan Select2 --}}
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            // Inisialisasi Select2 untuk Create Modal
+                            $('#pelajaran').select2({
+                                placeholder: "Pilih pelajaran",
+                                allowClear: true
+                            });
+
+                            // Inisialisasi ulang Select2 untuk Update Modal setiap kali modal dibuka
+                            $('[data-modal-toggle]').on('click', function() {
+                                let modalId = $(this).data('modal-target');
+                                $(`#${modalId} .select2`).select2({
+                                    placeholder: "Pilih pelajaran",
+                                    allowClear: true
+                                });
+                            });
+                        });
+                    </script>
                 </div>
             </div>
         </div>

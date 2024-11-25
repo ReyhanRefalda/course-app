@@ -61,7 +61,7 @@
                     <h3 class="text-xl font-semibold mb-2">{{ $pelajaran->judul }}</h3>
                     <p class="text-sm text-gray-500">
                         <span class="text-sm font-semibold">Video URL:</span>
-                        {{ $pelajaran->video_url ?? '-' }}
+                        {{ Str::limit($pelajaran->video_url, 50) }}
                     </p>
                     <p class="text-sm text-gray-500 mb-3">
                         <span class="text-sm font-semibold">Penjelasan:</span>

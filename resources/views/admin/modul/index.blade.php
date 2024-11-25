@@ -13,7 +13,8 @@
         <div class="w-full max-w-md">
             <form action="#" me thod="GET">
                 <div class="flex items-center space-x-2">
-                    <input type="text" name="search" placeholder="Cari data modul..." value="{{ request('search') }}"
+                    <input type="text" name="search" placeholder="Cari data modul..."
+                        value="{{ request('search') }}"
                         class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-900 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out">
                     <button type="submit"
                         class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -207,7 +208,8 @@
                         <!-- Input Pelajaran dengan Select2 -->
                         <div class="flex flex-col mb-4">
                             <label for="pelajaran" class="block text-sm font-medium text-gray-700">Pelajaran</label>
-                            <select name="pelajaran[]" id="pelajaran-{{ $modul->id }}" class="select2 w-full" multiple>
+                            <select name="pelajaran[]" id="pelajaran-{{ $modul->id }}" class="select2 w-full"
+                                multiple>
                                 {{-- Pelajaran yang belum digunakan --}}
                                 @foreach ($pelajarans as $pelajaran)
                                     <option value="{{ $pelajaran->id }}"
@@ -215,14 +217,15 @@
                                         {{ $pelajaran->judul }}
                                     </option>
                                 @endforeach
-                            
+
                                 {{-- Pelajaran yang sudah terkait dengan modul ini tetapi tidak ada di pelajarans --}}
                                 @foreach ($modul->pelajaran as $pelajaran)
                                     @if (!$pelajarans->contains($pelajaran))
-                                        <option value="{{ $pelajaran->id }}" selected>{{ $pelajaran->judul }}</option>
+                                        <option value="{{ $pelajaran->id }}" selected>{{ $pelajaran->judul }}
+                                        </option>
                                     @endif
                                 @endforeach
-                            </select>                            
+                            </select>
                         </div>
 
                         <!-- Tombol Aksi -->

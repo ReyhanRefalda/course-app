@@ -30,5 +30,5 @@ class Kursus extends Model
     {
         return $this->hasMany(Modul::class);
     }
-    
+
 }
