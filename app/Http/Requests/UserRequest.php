@@ -17,10 +17,10 @@ class UserRequest extends FormRequest
         return [
             'nama' => 'required|string|max:15',
             'email' => 'required|string|email|max:25|unique:users,email,' . $id,
-            'usertype' => 'required|in:user,admin',
+            'role' => 'required|exists:roles,name', // Validasi role harus ada di tabel roles
         ];
     }
-
+    
     public function messages()
     {
         return [
@@ -31,9 +31,10 @@ class UserRequest extends FormRequest
             'email.string' => 'Email harus berupa huruf.',
             'email.max' => 'Email tidak boleh lebih dari 25 karakter.',
             'email.unique' => 'Email sudah digunakan.',
-            'usertype.required' => 'Usertype tidak boleh kosong.',
-            'usertype.in' => 'Usertype hanya boleh bernilai "user" atau "admin".',
+            'role.required' => 'Role tidak boleh kosong.',
+            'role.exists' => 'Role yang dipilih tidak valid.',
         ];
     }
+    
 }
 

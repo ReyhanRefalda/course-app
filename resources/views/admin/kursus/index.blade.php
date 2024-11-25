@@ -151,11 +151,13 @@
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                             @foreach ($moduls as $modul)
                                 <option value="{{ $modul->id }}"
-                                    {{ collect(old('modul_id'))->contains($modul->id) ? 'selected' : '' }}>
+                                    {{ in_array($modul->id, $selectedModuls) ? 'selected' : '' }}>
                                     {{ $modul->judul }}
                                 </option>
                             @endforeach
                         </select>
+
+
                         <x-input-error class="mt-2" :messages="$errors->get('modul_id')" />
                     </div>
 
@@ -212,16 +214,15 @@
         <div id="updateProductModal-{{ $item->id }}" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-2xl max-h-full">
-                <!-- Modal content -->
                 <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
-                    <!-- Modal header -->
                     <div
                         class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-800">Edit Artikel</h3>
+                        <h3 class="text-lg font-semibold text-gray-900">Edit Kursus</h3>
                         <button type="button"
-                            class="text-gray-400 bg-transparent hover:bg-gray-100 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                            data-modal-target="updateProductModal-{{ $item->id }}"
                             data-modal-toggle="updateProductModal-{{ $item->id }}">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
                                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -236,75 +237,65 @@
                         rel="stylesheet" />
 
                     <!-- Modal body -->
-                    <form action="{{ route('admin.kursus.update', $item->id) }}" method="POST">
+                    <form action="{{ route('admin.kursus.update', $item->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        {{-- Form Input Judul --}}
+                        <!-- Input Judul -->
                         <div class="flex flex-col mb-4">
-                            <label for="judul" class="block text-sm font-medium text-gray-700">Judul Kursus</label>
-                            <input type="text" id="judul" name="judul"
+                            <label for="title" class="block text-sm font-medium text-gray-700">Judul</label>
+                            <input type="text" name="judul" id="title"
                                 value="{{ old('judul', $item->judul) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                placeholder="Masukkan judul kursus" required>
-                            @error('judul')
-                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                            @enderror
+                                placeholder="Masukkan judul kursus">
+                            <x-input-error class="mt-2" :messages="$errors->get('judul')" />
                         </div>
 
-                        {{-- Form Pilihan Modul --}}
+                        <!-- Input Modul -->
                         <div class="flex flex-col mb-4">
-                            <label for="modul_id" class="block text-sm font-medium text-gray-700">Pilih Modul</label>
-                            {{-- <select name="modul_id[]" id="modul_id-{{ $item->id }}" class="select2 w-full"
-                                multiple>
-                                @foreach ($moduls as $modul)
-                                    <option value="{{ $modul->id }}"
-                                        {{ in_array($modul->id, $kursus->modul->pluck('id')->toArray()) ? 'selected' : '' }}>
-                                        {{ $modul->judul }}
+
+                            <label for="modul_id" class="block text-sm font-medium text-gray-700">Modul</label>
+                            <select id="modul_id" name="modul[]" class="form-control" multiple>
+                                @foreach($moduls as $modul)
+                                    <option value="{{ $modul->id }}" 
+                                        {{ in_array($modul->id, $selectedModuls) ? 'selected' : '' }}>
+                                        {{ $modul->name }}
                                     </option>
                                 @endforeach
-
-                                @foreach ($kursus->moduls as $modul)
-                                    @if (!$modul->contains($modul))
-                                        <option value="{{ $modul->id }}" selected>{{ $modul->judul }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select> --}}
-                            <p class="text-sm text-gray-500 mt-1">Pilih satu atau lebih modul untuk kursus ini.</p>
-                            @error('modul_id')
-                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                            @enderror
+                            </select>
+                            
+                            <x-input-error class="mt-2" :messages="$errors->get('modul_id')" />
                         </div>
 
-                        {{-- Form Input Deskripsi --}}
+                        <!-- Input Deskripsi -->
                         <div class="flex flex-col mb-4">
-                            <label for="deskripsi" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-                            <textarea id="deskripsi" name="deskripsi" rows="4"
+                            <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                            <textarea name="deskripsi" id="description" rows="4"
                                 class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                placeholder="Masukkan deskripsi kursus" required>{{ old('deskripsi', $item->deskripsi) }}</textarea>
-                            @error('deskripsi')
-                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                            @enderror
+                                placeholder="Masukkan deskripsi kursus">{{ old('deskripsi', $item->deskripsi) }}</textarea>
+                            <x-input-error class="mt-2" :messages="$errors->get('deskripsi')" />
                         </div>
 
-                        {{-- Form Input Harga --}}
+                        <!-- Input Harga -->
                         <div class="flex flex-col mb-4">
-                            <label for="harga" class="block text-sm font-medium text-gray-700">Harga Kursus</label>
-                            <input type="number" id="harga" name="harga"
+                            <label for="price" class="block text-sm font-medium text-gray-700">Harga</label>
+                            <input type="number" name="harga" id="price"
                                 value="{{ old('harga', $item->harga) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                                placeholder="Masukkan harga kursus" min="0" required>
-                            @error('harga')
-                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                            @enderror
+                                placeholder="Masukkan harga kursus">
+                            <x-input-error class="mt-2" :messages="$errors->get('harga')" />
                         </div>
 
-                        {{-- Tombol Submit --}}
                         <div class="flex justify-end">
+                            <button type="button" data-modal-target="updateProductModal-{{ $item->id }}"
+                                data-modal-toggle="updateProductModal-{{ $item->id }}"
+                                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border bg-red-500 text-white hover:bg-red-600">
+                                Batal
+                            </button>
                             <button type="submit"
-                                class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
-                                Simpan Perubahan
+                                class="ml-4 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border bg-blue-600 text-white hover:bg-blue-700">
+                                Simpan
                             </button>
                         </div>
                     </form>
@@ -377,4 +368,15 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        $(document).ready(function() {
+            $('#modul_id').select2({
+                placeholder: "Pilih modul",
+                allowClear: true
+            });
+        });
+    </script>
+
+
 </x-admin>
