@@ -6,6 +6,7 @@ use App\Models\Modul;
 use App\Models\Kursus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KursusRequest;
 use Illuminate\Support\Facades\Auth;
 
 class KursusController extends Controller
@@ -42,15 +43,9 @@ class KursusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(KursusRequest $request)
     {
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'harga' => 'required|numeric|min:0',
-            'modul_id' => 'nullable|array',
-            'modul_id.*' => 'exists:modul,id',
-        ]);
+        $validated = $request->validated();
 
         $kursus = Kursus::create([
             'judul' => $validated['judul'],
@@ -89,17 +84,11 @@ class KursusController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(KursusRequest $request, $id)
     {
         $kursus = Kursus::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'harga' => 'required|numeric|min:0',
-            'modul_id' => 'nullable|array',
-            'modul_id.*' => 'exists:modul,id',
-        ]);
+        $validatedData = $request->validated();
 
         $kursus->update($validatedData);
 
