@@ -105,8 +105,7 @@
                 <a href="{{ route('login') }}"
                     class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">Log in</a>
                 <a href="{{ route('register') }}"
-                    class="p-[8px_16px] w-fit h-fit rounded-[12px] text-belibang-grey border border-belibang-dark-grey hover:bg-[#2A2A2A] hover:text-white transition-all duration-300">Sign
-                    up</a>
+                    class="p-[8px_16px] w-fit h-fit rounded-[12px] text-belibang-grey border border-belibang-dark-grey hover:bg-[#2A2A2A] hover:text-white transition-all duration-300">Register</a>
             </div>
         </div>
     </nav>
