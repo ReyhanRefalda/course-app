@@ -14,7 +14,7 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-      
+
         $permissions = [
             'manage artikel',
             'manage kursus',
@@ -24,12 +24,12 @@ class RolePermissionSeeder extends Seeder
             'apply kursus',
         ];
 
-      
+
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-       
+
         $mentorRole = Role::firstOrCreate(['name' => 'mentor']);
         $mentorPermission = [
             'manage kursus',
@@ -39,16 +39,16 @@ class RolePermissionSeeder extends Seeder
         ];
         $mentorRole->syncPermissions($mentorPermission);
 
-      
+
         $siswaRole = Role::firstOrCreate(['name' => 'siswa']);
         $siswaPermission = ['apply kursus'];
         $siswaRole->syncPermissions($siswaPermission);
 
-       
+
         $superAdminRole = Role::firstOrCreate(['name' => 'superadmin']);
         $superAdminRole->syncPermissions($permissions);
 
-     
+
         $superAdmin = User::firstOrCreate([
             'email' => 'admin@courseapp.com',
         ], [
@@ -58,7 +58,7 @@ class RolePermissionSeeder extends Seeder
         ]);
         $superAdmin->assignRole($superAdminRole);
 
-       
+
         $mentor = User::firstOrCreate([
             'email' => 'mentor@courseapp.com',
         ], [
@@ -68,7 +68,7 @@ class RolePermissionSeeder extends Seeder
         ]);
         $mentor->assignRole($mentorRole);
 
-      
+
         $siswa = User::firstOrCreate([
             'email' => 'siswa@courseapp.com',
         ], [

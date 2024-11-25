@@ -231,6 +231,11 @@
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
+
+                    {{-- Memuat CSS Select2 --}}
+                    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+                        rel="stylesheet" />
+
                     <!-- Modal body -->
                     <form action="{{ route('admin.kursus.update', $item->id) }}" method="POST"
                         enctype="multipart/form-data">
@@ -249,6 +254,7 @@
 
                         <!-- Input Modul -->
                         <div class="flex flex-col mb-4">
+
                             <label for="modul_id" class="block text-sm font-medium text-gray-700">Modul</label>
                             <select id="modul_id" name="modul[]" class="form-control" multiple>
                                 @foreach($moduls as $modul)
@@ -293,6 +299,28 @@
                             </button>
                         </div>
                     </form>
+
+                    {{-- Memuat JS jQuery dan Select2 --}}
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            // Inisialisasi Select2 untuk Create Modal
+                            $('#pelajaran').select2({
+                                placeholder: "Pilih pelajaran",
+                                allowClear: true
+                            });
+
+                            // Inisialisasi ulang Select2 untuk Update Modal setiap kali modal dibuka
+                            $('[data-modal-toggle]').on('click', function() {
+                                let modalId = $(this).data('modal-target');
+                                $(`#${modalId} .select2`).select2({
+                                    placeholder: "Pilih pelajaran",
+                                    allowClear: true
+                                });
+                            });
+                        });
+                    </script>
                 </div>
             </div>
         </div>

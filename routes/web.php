@@ -28,7 +28,7 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
 
-
+Route::get('/artikel', [UserArtikelController::class, 'index'])->name('user.artikel.index'); // Daftar artikel
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -60,14 +60,13 @@ Route::middleware('auth')->group(function () {
             Route::patch('/users/{id}/updateUser', [AdminController::class, 'updateUser'])->name('users.updateUser');
             Route::delete('/users/{id}/destroyUser', [AdminController::class, 'destroyUser'])->name('users.destroyUser');
         });
-            
     });
 });
 
 // Detail
 
 
-
-
 // Tambahkan route otentikasi (login, register, logout)
 require __DIR__ . '/auth.php';
+
+Route::get('/artikel/{slug}', [UserArtikelController::class, 'detail'])->name('user.artikel.show'); // Detail
