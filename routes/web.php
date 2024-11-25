@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/artikel', [UserArtikelController::class, 'index'])->name('user.artikel.index');
+
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');
@@ -59,6 +61,9 @@ Route::middleware('auth')->group(function () {
             
     });
 });
+
+// Detail
+
 
 
 
