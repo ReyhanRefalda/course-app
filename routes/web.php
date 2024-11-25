@@ -10,15 +10,17 @@ use App\Http\Controllers\Admin\KursusController as AdminKursusController;
 use App\Http\Controllers\Admin\KomentarController as AdminKomentarController;
 use App\Http\Controllers\Admin\ModulController as AdminModulController;
 use App\Http\Controllers\Admin\PelajaranController as AdminPelajaranController;
+use App\Http\Controllers\FrontContoller;
 use App\Http\Controllers\User\ArtikelController as UserArtikelController;
 use App\Http\Controllers\User\KomentarController as UserKomentarController;
 use App\Http\Controllers\User\ModulController as UserModulController;
 use App\Http\Controllers\User\PelajaranController as UserPelajaranController;
 
 // Halaman utama (Landing Page)
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [FrontContoller::class, 'index'])->name('front.index');
+Route::get('/detail', [FrontContoller::class, 'detail'])->name('front.detail');
+Route::get('/beli', [FrontContoller::class, 'beli'])->name('front.beli');
+
 
 Route::get('/artikel', [UserArtikelController::class, 'index'])->name('user.artikel.index');
 

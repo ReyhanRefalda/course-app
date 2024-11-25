@@ -97,7 +97,7 @@
                         </div>
 
                         <!-- Pilihan Role -->
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="role" class="block text-sm font-semibold mb-2">Role</label>
                             <select name="role" id="role"
                                 class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -111,7 +111,7 @@
                                     @endif
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
                         <!-- Tombol -->
                         <div class="flex justify-end gap-3">

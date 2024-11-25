@@ -21,12 +21,12 @@ class AdminController extends Controller
     /**
      * Menampilkan daftar pengguna
      */
-    public function listUsers()
-    {
-        $users = User::with('roles')->get(); // Eager load roles untuk optimasi
-        $roles = \Spatie\Permission\Models\Role::all(); // Ambil semua role yang tersedia
-        return view('admin.users.index', compact('users', 'roles'));
-    }
+    // public function listUsers()
+    // {
+    //     $users = User::with('roles')->get(); // Eager load roles untuk optimasi
+    //     $roles = \Spatie\Permission\Models\Role::all(); // Ambil semua role yang tersedia
+    //     return view('admin.users.index', compact('users', 'roles'));
+    // }
     
 
     /**
