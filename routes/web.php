@@ -17,6 +17,7 @@ use App\Http\Middleware\UserMiddleware;
 
 // Route utama untuk halaman depan
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/details', [FrontController::class, 'details'])->name('front.details');
 
 // Route untuk autentikasi dan pengaturan profil
 Route::middleware('auth')->group(function () {
