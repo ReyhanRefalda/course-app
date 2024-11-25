@@ -1,59 +1,53 @@
 <x-user>
     <!-- Container -->
     <div class="max-w-7xl mx-auto p-4">
-
         <!-- Headline Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 mb-6 bg-white rounded-lg shadow">
             <!-- Main Featured Article -->
-            <div class="group w-[800px] rounded-lg md:col-span-2 relative overflow-hidden">
+            <div class="group sm:w-[90%] md:w-[800px] m-4 rounded-lg md:col-span-2 relative overflow-hidden">
                 <a href="{{ route('user.artikel.show', ['slug' => $lastData->slug]) }}">
-                    <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $lastData->tumbnail) }}" alt="Concert"
-                        class="w-[800px] h-[450px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105">
+                    <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $lastData->tumbnail) }}"
+                        alt="{{ $lastData->title }}"
+                        class="sm:w-[90%] md:w-[800px] md:h-[450px] object-cover rounded-lg transition-transform duration-300 group-hover:scale-105">
                 </a>
                 <div class="absolute inset-0 flex items-end rounded-lg">
                     <div class="w-full bg-black bg-opacity-50 p-4">
                         <a href="{{ route('user.artikel.show', ['slug' => $lastData->slug]) }}">
-                            <h2
-                                class="text-white text-2xl md:text-4xl font-bo                          ld hover:underline">
+                            <h2 class="text-white text-2xl md:text-4xl font-semibold hover:underline">
                                 {{ $lastData->title }}</h2>
                         </a>
-                        <p class="text-sm text-gray-100 mt-2">By {{ $lastData->user->nama }} |
-                            {{ $lastData->created_at->diffForHumans() }}</p>
+                        <div class="flex gap-8">
+                            <p class="sm:text-[8px] md:text-lg text-yellow-500 mt-2 font-bold">Berita Terbaru</p>
+                            <p class="sm:text-[8px] md:text-lg text-gray-100 mt-2 font-semibold">By
+                                {{ $lastData->user->nama }}</p>
+                            <p class="sm:text-[8px] md:text-lg text-gray-100 mt-2 font-semibold">
+                                {{ $lastData->created_at->diffForHumans() }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Sidebar -->
-            <div class="space-y-6">
+            <div class="space-y-6 m-4">
                 <!-- Article Sidebar Items -->
-                <div class="flex items-center space-x-4">
-                    <img src="https://source.unsplash.com/100x100/?concert" class="w-20 h-20 object-cover rounded-lg"
-                        alt="Concert">
+                @foreach ($secondToFifthData as $secondToFifthData)
                     <div>
-                        <span class="bg-red-200 text-red-800 text-xs font-bold py-1 px-2 rounded">CONCERT</span>
-                        <p class="text-gray-800 font-semibold">Welcome To The Best Model Winner Contest</p>
-                        <p class="text-xs text-gray-500 mt-2">By Michael Green | Nov 15, 2024</p>
+                        <a href="{{ route('user.artikel.show', ['slug' => $secondToFifthData->slug]) }}"
+                            class="flex  space-x-4 overflow-hidden rounded-lg">
+                            <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $secondToFifthData->tumbnail) }}"
+                                class="w-20 h-20 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+                                alt="{{ $secondToFifthData->title }}">
+                            <div>
+                                <p class="text-lg text-gray-900 font-semibold hover:underline">
+                                    {{ $secondToFifthData->title }}</p>
+                                <p class="text-xs text-gray-500 mt-2"><span class="font-semibold">By
+                                        {{ $secondToFifthData->user->nama }}</span> |
+                                    {{ $secondToFifthData->created_at->diffForHumans() }}</p>
+                            </div>
+                        </a>
                     </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <img src="https://source.unsplash.com/100x100/?beach" class="w-20 h-20 object-cover rounded-lg"
-                        alt="Beach">
-                    <div>
-                        <span class="bg-blue-200 text-blue-800 text-xs font-bold py-1 px-2 rounded">SEA BEACH</span>
-                        <p class="text-gray-800 font-semibold">Enjoy the Best Sea Beach Experience</p>
-                        <p class="text-xs text-gray-500 mt-2">By Michael Green | Nov 15, 2024</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <img src="https://source.unsplash.com/100x100/?bike" class="w-20 h-20 object-cover rounded-lg"
-                        alt="Bike Show">
-                    <div>
-                        <span class="bg-green-200 text-green-800 text-xs font-bold py-1 px-2 rounded">BIKE
-                            SHOW</span>
-                        <p class="text-gray-800 font-semibold">Join the Best Bike Show Event</p>
-                        <p class="text-xs text-gray-500 mt-2">By Michael Green | Nov 15, 2024</p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
 

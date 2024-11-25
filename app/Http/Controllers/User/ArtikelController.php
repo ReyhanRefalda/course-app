@@ -11,8 +11,19 @@ class ArtikelController extends Controller
     {
         $lastData = $this->lastData();
 
-        $artikels = Artikel::where('status', 'publish')->where('id', '!=', $lastData->id)->orderBy('id', 'desc')->paginate(10);
-        return view('user.artikel.index', compact('artikels', 'lastData'));
+        $secondToFifthData = Artikel::where('status', 'publish')
+            ->where('id', '!=', $lastData->id)
+            ->orderBy('id', 'desc')
+            ->skip(0)
+            ->take(4)
+            ->get();
+
+        $artikels = Artikel::where('status', 'publish')
+            ->whereNotIn('id', $secondToFifthData->pluck('id')->prepend($lastData->id))
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        return view('user.artikel.index', compact('artikels', 'lastData', 'secondToFifthData'));
     }
 
     public function detail($slug)

@@ -1,19 +1,9 @@
 <x-admin>
-    <div class="p-6 bg-gradient-to-r via-white to-gray-100 min-h-screen">
+    <h1 class="text-lg mb-4 text-gray-500 text-start">DASHBOARD ADMIN <span class="text-gray-900"><b>/ DAFTAR
+                KURSUS</b></span>
+    </h1>
 
-        <!-- Header -->
-        <div
-            class="flex justify-between items-center mb-8 p-4 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white rounded-lg shadow-lg">
-            <h1 class="text-3xl font-bold flex items-center gap-2">
-                <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12h6m2 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                Dashboard Admin
-            </h1>
-            <span class="text-gray-100 text-sm font-semibold">/ Daftar User</span>
-        </div>
+    <div class="p-6 bg-gradient-to-r via-white to-gray-100 min-h-screen">
 
         @if (session('success'))
             <div id="alertMessage"
@@ -181,7 +171,5 @@
                 document.getElementById(`deleteUserForm-${userId}`).submit();
             }
         }
-
-
     </script>
 </x-admin>

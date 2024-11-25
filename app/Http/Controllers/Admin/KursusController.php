@@ -16,16 +16,17 @@ class KursusController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $moduls = Modul::whereNull('kursus_id')->get();
         $search = $request->search;
 
-        
-        $kursus = Kursus::with('modul') 
+
+        $kursus = Kursus::with('modul')
             ->when($search, function ($query) use ($search) {
                 $query->where('judul', 'like', '%' . $search . '%');
             })
             ->get();
 
-        return view('admin.kursus.index', compact('kursus'));
+        return view('admin.kursus.index', compact('kursus', 'moduls'));
     }
 
 
@@ -34,7 +35,7 @@ class KursusController extends Controller
      */
     public function create()
     {
-        $moduls = Modul::whereNull('kursus_id')->get(); 
+        $moduls = Modul::whereNull('kursus_id')->get();
         return view('admin.kursus.create', compact('moduls'));
     }
 
@@ -79,7 +80,7 @@ class KursusController extends Controller
     {
         $kursus = Kursus::with('modul')->findOrFail($id);
         $moduls = Modul::whereNull('kursus_id')
-            ->orWhere('kursus_id', $kursus->id) 
+            ->orWhere('kursus_id', $kursus->id)
             ->get();
 
         return view('admin.kursus.edit', compact('kursus', 'moduls'));
@@ -103,14 +104,14 @@ class KursusController extends Controller
 
         $kursus->update($validatedData);
 
-      
+
         if (isset($validatedData['modul_id'])) {
             Modul::whereIn('id', $validatedData['modul_id'])->update(['kursus_id' => $kursus->id]);
             Modul::whereNotIn('id', $validatedData['modul_id'])
                 ->where('kursus_id', $kursus->id)
                 ->update(['kursus_id' => null]);
         } else {
-           
+
             Modul::where('kursus_id', $kursus->id)->update(['kursus_id' => null]);
         }
 
