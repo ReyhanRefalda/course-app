@@ -19,7 +19,10 @@
                         <label for="judul" class="block text-sm font-medium text-gray-700">Judul Modul</label>
                         <input type="text" name="judul" id="judul"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            placeholder="Masukkan judul modul" value="{{ old('judul') }}" required>
+                            placeholder="Masukkan judul modul" value="{{ old('judul') }}">
+                        @error('judul')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <!-- Input Pelajaran dengan Select2 -->
@@ -33,8 +36,18 @@
                                 </option>
                             @endforeach
                         </select>
-
+                    
+                        {{-- Error untuk array pelajaran --}}
+                        @error('pelajaran')
+                            <span class="text-sm text-red-500">{{ $message }}</span>
+                        @enderror
+                        @foreach ($errors->get('pelajaran.*') as $messages)
+                            @foreach ($messages as $message)
+                                <span class="text-sm text-red-500">{{ $message }}</span>
+                            @endforeach
+                        @endforeach
                     </div>
+                    
 
                     <!-- Tombol Aksi -->
                     <div class="flex justify-end">

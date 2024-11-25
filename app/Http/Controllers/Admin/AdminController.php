@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -37,27 +38,15 @@ class AdminController extends Controller
     /**
      * Mengupdate data pengguna (nama, email, dan role)
      */
-    public function updateUser(Request $request, $id)
-    {
-        // Validasi input
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'usertype' => 'required|in:user,admin',
-        ]);
 
-        // Cari pengguna yang akan diperbarui
+    public function updateUser(UserRequest $request, $id)
+    {
         $user = User::findOrFail($id);
 
-        // Update nama, email, dan role
-        $user->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'usertype' => $request->usertype,
-        ]);
+        $data = $request->validated(); // Data tervalidasi dari Form Request
 
-        $user->save();
-        // Redirect kembali dengan pesan sukses
+        $user->update($data);
+
         return redirect()->route('admin.users.index')->with('success', 'Pengguna berhasil diperbarui!');
     }
     public function destroyUser($id)
