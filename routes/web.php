@@ -10,24 +10,16 @@ use App\Http\Controllers\Admin\KursusController as AdminKursusController;
 use App\Http\Controllers\Admin\KomentarController as AdminKomentarController;
 use App\Http\Controllers\Admin\ModulController as AdminModulController;
 use App\Http\Controllers\Admin\PelajaranController as AdminPelajaranController;
-use App\Http\Controllers\FrontContoller;
-use App\Http\Controllers\User\ArtikelController as UserArtikelController;
+// use App\Http\Controllers\KursusController;
 use App\Http\Controllers\User\KomentarController as UserKomentarController;
 use App\Http\Controllers\User\ModulController as UserModulController;
 use App\Http\Controllers\User\PelajaranController as UserPelajaranController;
+use App\Http\Controllers\User\ArtikelController as UserArtikelController;
+use App\Http\Controllers\FrontController;
 
-// Halaman utama (Landing Page)
-Route::get('/', [FrontContoller::class, 'index'])->name('front.index');
-Route::get('/detail', [FrontContoller::class, 'detail'])->name('front.detail');
-Route::get('/beli', [FrontContoller::class, 'beli'])->name('front.beli');
-
-
-// Dashboard Utama (Admin)
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
-});
+// Route utama untuk halaman depan
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/details', [FrontController::class, 'details'])->name('front.details');
 
 // Profil: Digunakan untuk User dan Admin
 Route::middleware('auth')->group(function () {
