@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -15,7 +14,7 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+      
         $permissions = [
             'manage artikel',
             'manage kursus',
@@ -25,57 +24,58 @@ class RolePermissionSeeder extends Seeder
             'apply kursus',
         ];
 
-        foreach ($permissions as $permission){
-            Permission::firstOrCreate([
-                'name' => $permission
-            ]);
+      
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
-        $mentorRole = Role::firstOrCreate([
-            'name' => 'mentor'
-        ]);
-
+       
+        $mentorRole = Role::firstOrCreate(['name' => 'mentor']);
         $mentorPermission = [
             'manage kursus',
             'manage modul',
             'manage pelajaran',
             'manage artikel',
         ];
-
         $mentorRole->syncPermissions($mentorPermission);
 
-        $siswaRole = Role::firstOrCreate([
-            'name' => 'siswa'
-        ]);
-
-        $siswaPermission = [
-            'apply kursus'
-        ];
-
+      
+        $siswaRole = Role::firstOrCreate(['name' => 'siswa']);
+        $siswaPermission = ['apply kursus'];
         $siswaRole->syncPermissions($siswaPermission);
 
-        $superAdminRole = Role::firstOrCreate([
-            'name' => 'superadmin'
-        ]);
+       
+        $superAdminRole = Role::firstOrCreate(['name' => 'superadmin']);
+        $superAdminRole->syncPermissions($permissions);
 
-        $superAdminPermission = [
-            'manage artikel',
-            'manage kursus',
-            'manage modul',
-            'manage pelajaran',
-            'manage user',
-            'apply kursus',
-        ];
-
-        $superAdminRole->syncPermissions($superAdminPermission);
-
-        $user = User::create([
-            'nama' => 'admin',
-            'email' => 'team@courseapp.com',
+     
+        $superAdmin = User::firstOrCreate([
+            'email' => 'admin@courseapp.com',
+        ], [
+            'nama' => 'Super Admin',
             'avatar' => 'images/default-avatar.png',
             'password' => bcrypt('superadmin123'),
         ]);
-        $user->assignRole($superAdminRole);
+        $superAdmin->assignRole($superAdminRole);
 
+       
+        $mentor = User::firstOrCreate([
+            'email' => 'mentor@courseapp.com',
+        ], [
+            'nama' => 'Mentor',
+            'avatar' => 'images/default-avatar.png',
+            'password' => bcrypt('mentor123'),
+        ]);
+        $mentor->assignRole($mentorRole);
+
+      
+        $siswa = User::firstOrCreate([
+            'email' => 'siswa@courseapp.com',
+        ], [
+            'nama' => 'Siswa User',
+            'avatar' => 'images/default-avatar.png',
+            'password' => bcrypt('siswa123'),
+        ]);
+        $siswa->assignRole($siswaRole);
     }
 }

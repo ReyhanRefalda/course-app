@@ -6,8 +6,11 @@ use App\Models\Artikel;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArtikelRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ArtikelController extends Controller
 {
@@ -38,21 +41,8 @@ class ArtikelController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ArtikelRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'tumbnail' => 'required|image|mimes:jpeg,png,jpg,svg,gif,webp|max:10240',
-        ], [
-            'title.required' => 'Judul wajib diisi',
-            'content.required' => 'Isi wajib diisi',
-            'tumbnail.image' => 'Hanya gambar yang dibolehkan',
-            'tumbnail.mimes' => 'Gambar harus berupa file gambar (jpeg, png, jpg, svg, gif, webp)',
-            'tumbnail.max' => 'Gambar tidak boleh lebih besar dari 10MB',
-            'tumbnail.required' => 'Gambar wajib diisi',
-        ]);
-
         if ($request->hasFile('tumbnail')) {
             $image = $request->file('tumbnail');
             $image_name = time() . '.' . $image->getClientOriginalExtension();
@@ -96,43 +86,43 @@ class ArtikelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Artikel $artikel)
+    public function update(ArtikelRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'tumbnail' => 'nullable|image|mimes:jpeg,png,jpg,svg,gif,webp|max:10240',
-        ], [
-            'title.required' => 'Judul wajib diisi',
-            'content.required' => 'Isi wajib diisi',
-            'tumbnail.image' => 'Hanya gambar yang dibolehkan',
-            'tumbnail.mimes' => 'Gambar harus berupa file gambar (jpeg, png, jpg, svg, gif, webp)',
-            'tumbnail.max' => 'Gambar tidak boleh lebih besar dari 10MB',
-        ]);
+        $artikel = Artikel::findOrFail($id);
 
         if ($request->hasFile('tumbnail')) {
+            // Hapus file thumbnail lama jika ada
             if (isset($artikel->tumbnail) && file_exists(public_path(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail))) {
                 unlink(public_path(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail));
             }
+    
+            // Upload file baru
             $image = $request->file('tumbnail');
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path(getenv('CUSTOM_TUMBNAIL_LOCATION'));
             $image->move($destinationPath, $image_name);
         }
-
+    
+        // Bersihkan konten dari elemen tambahan
+        $cleanContent = strip_tags($request->content, '<p><a><strong><em><ul><li><ol><blockquote><br>');
+    
+        // Data yang akan diupdate
         $data = [
             'title' => $request->title,
             'description' => $request->description,
-            'content' => $request->content,
+            'content' => $cleanContent,
             'status' => $request->status,
             'tumbnail' => isset($image_name) ? $image_name : $artikel->tumbnail,
-            'slug' => $this->generateSlug($request->title, $artikel->id)
+            'slug' => $this->generateSlug($request->title, $artikel->id),
         ];
 
-        Artikel::where('id', $artikel->id)->update($data);
+        $artikel->update($data);
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diupdate!');
     }
+    
+    
+    
 
     /**
      * Remove the specified resource from storage.

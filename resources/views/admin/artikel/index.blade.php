@@ -51,6 +51,35 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div id="alert-border-2"
+            class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:border-red-700 rounded-lg"
+            role="alert">
+            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                viewBox="0 0 20 20">
+                <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <div class="ms-3 text-sm font-medium">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <button type="button"
+                class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:text-red-400"
+                data-dismiss-target="#alert-border-2" aria-label="Close">
+                <span class="sr-only">Dismiss</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
+        </div>
+    @endif
+
     <div class="grid grid-cols-3 gap-4">
         @foreach ($artikels as $artikel)
             <div
@@ -75,7 +104,6 @@
                                 data-modal-toggle="deleteModal-{{ $artikel->id }}">
                                 <img src="{{ asset('aset/delete-icon.png') }}" alt="Delete" class="w-10">
                             </button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -138,7 +166,8 @@
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label for="description" class="block text-gray-800 font-semibold">Ringkasan</label>
-                                <input type="text" name="description" id="description" value="{{ old('description') }}"
+                                <input type="text" name="description" id="description"
+                                    value="{{ old('description') }}"
                                     class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <x-input-error class="mt-2" :messages="$errors->get('description')" />
                             </div>
@@ -147,15 +176,18 @@
                                     Artikel</label>
                                 <input id="x" type="hidden" name="content">
                                 <trix-editor input="x"
-                                    class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80"> {!! old('content') !!} </trix-editor>
+                                    class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">
+                                    {!! old('content') !!} </trix-editor>
                                 <x-input-error class="mt-2" :messages="$errors->get('content')" />
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label for="status" class="block text-gray-800 font-semibold">Status</label>
                                 <select name="status" id="status"
                                     class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft</option>
-                                    <option value="publish" {{ old('status') == 'publish' ? 'selected' : '' }}>Publish</option>
+                                    <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="publish" {{ old('status') == 'publish' ? 'selected' : '' }}>Publish
+                                    </option>
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('status')" />
                             </div>
@@ -224,13 +256,20 @@
                                     <x-input-error class="mt-2" :messages="$errors->get('description')" />
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="content" class="block text-gray-800 font-semibold">Isi
-                                        Artikel</label>
-                                    <input id="x" type="hidden" name="content">
-                                    <trix-editor input="x"
-                                        class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">{!! old('content', $artikel->content) !!}</trix-editor>
+
+                                    <label for="content" class="block text-gray-800 font-semibold">
+                                        Isi Artikel
+                                    </label>
+                                    <!-- Elemen input hidden untuk Trix -->
+                                    <input id="x-{{ $artikel->id }}" type="hidden" name="content"
+                                        value="{!! old('content', $artikel->content) !!}">
+                                    <trix-editor input="x-{{ $artikel->id }}"></trix-editor>
+
+
+                                    <!-- Error message -->
                                     <x-input-error class="mt-2" :messages="$errors->get('content')" />
                                 </div>
+                              
                                 <div class="flex flex-col gap-2">
                                     <label for="status" class="block text-gray-800 font-semibold">Status</label>
                                     <select name="status" id="status"
@@ -307,4 +346,25 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ambil elemen input hidden dan editor
+            const hiddenInput = document.getElementById("x");
+            const trixEditor = document.querySelector("trix-editor");
+    
+            // Debug nilai hidden input
+            console.log("Hidden Input Value:", hiddenInput.value);
+    
+            // Isi editor dengan nilai lama
+            if (hiddenInput.value) {
+                trixEditor.editor.loadHTML(hiddenInput.value);
+            }
+    
+            // Sinkronisasi perubahan dari editor ke hidden input
+            trixEditor.addEventListener("trix-change", function () {
+                hiddenInput.value = trixEditor.editor.getDocument().toString();
+            });
+        });
+    </script>
 </x-admin>
