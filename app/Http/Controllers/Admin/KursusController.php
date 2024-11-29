@@ -74,12 +74,22 @@ class KursusController extends Controller
     public function edit($id)
     {
         $kursus = Kursus::with('modul')->findOrFail($id);
+        
+        // Debugging
+        if ($kursus->modul === null) {
+            dd('Modul is null');
+        } elseif ($kursus->modul->isEmpty()) {
+            dd('No modul found for this kursus.');
+        }
+    
+        // Ambil modul yang belum terkait kursus atau terkait dengan kursus ini
         $moduls = Modul::whereNull('kursus_id')
             ->orWhere('kursus_id', $kursus->id)
             ->get();
-
+        
         return view('admin.kursus.edit', compact('kursus', 'moduls'));
     }
+    
 
 
     /**

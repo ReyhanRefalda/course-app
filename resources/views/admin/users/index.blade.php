@@ -96,14 +96,14 @@
                                 class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
 
-                        <!-- Pilihan Role -->
-                        {{-- <div class="mb-4">
+                      
+                        <div class="mb-4">
                             <label for="role" class="block text-sm font-semibold mb-2">Role</label>
                             <select name="role" id="role"
                                 class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 @foreach ($roles as $role)
                                     @if ($role->name !== 'superadmin')
-                                        {{-- Kecualikan superadmin --}}
+                                      
                                         <option value="{{ $role->name }}"
                                             {{ $user->roles->pluck('name')->contains($role->name) ? 'selected' : '' }}>
                                             {{ ucfirst($role->name) }}
@@ -111,7 +111,7 @@
                                     @endif
                                 @endforeach
                             </select>
-                        </div> --}}
+                        </div>
 
                         <!-- Tombol -->
                         <div class="flex justify-end gap-3">

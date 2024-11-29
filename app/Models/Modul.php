@@ -17,7 +17,7 @@ class Modul extends Model
      */
     protected $fillable = [
         'judul',
-        'kursus_id', // Menghubungkan ke kursus jika diperlukan
+        'kursus_id', 
     ];
 
     /**

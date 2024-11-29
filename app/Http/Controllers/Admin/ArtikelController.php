@@ -43,28 +43,33 @@ class ArtikelController extends Controller
      */
     public function store(ArtikelRequest $request)
     {
+        // Proses upload file thumbnail
         if ($request->hasFile('tumbnail')) {
             $image = $request->file('tumbnail');
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path(getenv('CUSTOM_TUMBNAIL_LOCATION'));
             $image->move($destinationPath, $image_name);
         }
-
+    
+        // Proses data sebelum menyimpan
         $data = [
             'title' => $request->title,
             'description' => $request->description,
-            'content' => $request->content,
+            // Hapus semua tag HTML dari konten
+            'content' => strip_tags($request->content),
             'status' => $request->status,
             'tumbnail' => isset($image_name) ? $image_name : null,
             'slug' => $this->generateSlug($request->title),
             'users_id' => Auth::user()->id,
         ];
-
+    
+        // Simpan data ke database
         Artikel::create($data);
-
+    
+        // Redirect dengan pesan sukses
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil ditambah!');
     }
-
+    
     /**
      * Display the specified resource.
      */
@@ -104,13 +109,13 @@ class ArtikelController extends Controller
         }
     
         // Bersihkan konten dari elemen tambahan
-        $cleanContent = strip_tags($request->content, '<p><a><strong><em><ul><li><ol><blockquote><br>');
+      
     
         // Data yang akan diupdate
         $data = [
             'title' => $request->title,
             'description' => $request->description,
-            'content' => $cleanContent,
+            'content' => strip_tags($request->content),
             'status' => $request->status,
             'tumbnail' => isset($image_name) ? $image_name : $artikel->tumbnail,
             'slug' => $this->generateSlug($request->title, $artikel->id),
