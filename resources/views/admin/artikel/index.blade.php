@@ -1,14 +1,14 @@
 <x-admin>
-    <h1 class="text-lg mb-4 text-gray-500 text-start">DASHBOARD ADMIN <span class="text-gray-900"><b>/ DAFTAR
-                ARTIKEL</b></span>
+    <h1 class="text-lg mb-4 text-gray-500 text-start">
+        DASHBOARD ADMIN <span class="text-gray-900"><b>/ DAFTAR ARTIKEL</b></span>
     </h1>
     <div class="w-full flex justify-between items-center mb-4 space-x-4">
-        <button type="button" id="createProductModalButton" data-modal-target="createProductModal"
-            data-modal-toggle="createProductModal"
-            class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Tambah
-            Artikel</button>
+        <a href="{{ route('admin.artikel.create') }}"
+            class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            Tambah Artikel
+        </a>
         <div class="w-full max-w-md">
-            <form action="{{ route('admin.artikel.index') }}" me thod="GET">
+            <form action="{{ route('admin.artikel.index') }}" method="GET">
                 <div class="flex items-center space-x-2">
                     <input type="text" name="search" placeholder="Cari artikel" value="{{ request('search') }}"
                         class="w-full px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-900 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 ease-in-out">
@@ -24,7 +24,7 @@
             </form>
         </div>
     </div>
-
+    
 
     @if (session('success'))
         <div id="alert-border-1"
@@ -38,45 +38,6 @@
             <div class="ms-3 text-sm font-medium">
                 <span>{{ session('success') }}</span>
             </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex items-center justify-center h-8 w-8 dark:text-blue-400"
-                data-dismiss-target="#alert-border-1" aria-label="Close">
-                <span class="sr-only">Dismiss</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewbox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
-        </div>
-    @endif
-
-    @if ($errors->any())
-        <div id="alert-border-2"
-            class="flex items-center p-4 mb-4 text-red-800 border-t-4 border-red-300 bg-red-50 dark:border-red-700 rounded-lg"
-            role="alert">
-            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-            </svg>
-            <div class="ms-3 text-sm font-medium">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-            <button type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:text-red-400"
-                data-dismiss-target="#alert-border-2" aria-label="Close">
-                <span class="sr-only">Dismiss</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
         </div>
     @endif
 
@@ -84,6 +45,9 @@
         @foreach ($artikels as $artikel)
             <div
                 class="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+
+                <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}" alt="Artikel Thumbnail" class="w-full h-48 object-cover">
+
                 <div class="relative">
                     <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
                         alt="Artikel Thumbnail" class="w-full h-48 object-cover">
@@ -108,6 +72,7 @@
                     </div>
                 </div>
 
+
                 <div class="p-4">
                     <h2 class="text-xl font-bold text-gray-800">{{ $artikel->title }}</h2>
                     <p class="text-gray-600 text-sm mt-1">
@@ -115,11 +80,18 @@
                         pada <span class="font-semibold">{{ $artikel->created_at->isoFormat('dddd, D MMMM Y') }}</span>
                     </p>
                     <p class="mt-2 text-gray-700 line-clamp-3">{{ $artikel->description }}</p>
-                    <span
-                        class="mt-4 inline-block px-3 py-1 text-xs font-bold rounded
+                    <span class="mt-4 inline-block px-3 py-1 text-xs font-bold rounded
                     {{ $artikel->status == 'publish' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }}">
                         {{ ucfirst($artikel->status) }}
                     </span>
+                    <div class="mt-4 flex gap-4">
+                        <a href="{{ route('admin.artikel.show', $artikel->id) }}" class="text-blue-500 hover:underline">
+                            Show
+                        </a>
+                        <a href="{{ route('admin.artikel.edit', $artikel->id) }}" class="text-yellow-500 hover:underline">
+                            Edit
+                        </a>
+                    </div>
                 </div>
             </div>
         @endforeach
@@ -128,6 +100,7 @@
     <div class="py-4">
         {!! $artikels->links() !!}
     </div>
+
 
     <!-- Create modal -->
     <div id="createProductModal" tabindex="-1" aria-hidden="true"
@@ -367,4 +340,5 @@
             });
         });
     </script>
+
 </x-admin>
