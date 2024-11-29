@@ -83,6 +83,77 @@
                             class="py-2 px-3 text-sm font-semibold rounded-md bg-red-500 text-white hover:bg-red-600">
                             Hapus
                         </button>
+
+
+                    </div>
+
+                    {{-- Memuat CSS Select2 --}}
+                    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+                        rel="stylesheet" />
+
+                    <!-- Modal body -->
+                    <form action="{{ route('admin.kursus.update', $item->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Input Judul -->
+                        <div class="flex flex-col mb-4">
+                            <label for="title" class="block text-sm font-medium text-gray-700">Judul</label>
+                            <input type="text" name="judul" id="title"
+                                value="{{ old('judul', $item->judul) }}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Masukkan judul kursus">
+                            <x-input-error class="mt-2" :messages="$errors->get('judul')" />
+                        </div>
+
+                        <!-- Input Modul -->
+                        <div class="flex flex-col mb-4">
+
+                            <label for="modul_id" class="block text-sm font-medium text-gray-700">Modul</label>
+                            <select id="modul_id" name="modul[]" class="form-control" multiple>
+                                @foreach($moduls as $modul)
+                                    <option value="{{ $modul->id }}"
+                                        {{ in_array($modul->id, $selectedModuls) ? 'selected' : '' }}>
+                                        {{ $modul->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            
+                            <x-input-error class="mt-2" :messages="$errors->get('modul_id')" />
+                        </div>
+
+                        <!-- Input Deskripsi -->
+                        <div class="flex flex-col mb-4">
+                            <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                            <textarea name="deskripsi" id="description" rows="4"
+                                class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Masukkan deskripsi kursus">{{ old('deskripsi', $item->deskripsi) }}</textarea>
+                            <x-input-error class="mt-2" :messages="$errors->get('deskripsi')" />
+                        </div>
+
+                        <!-- Input Harga -->
+                        <div class="flex flex-col mb-4">
+                            <label for="price" class="block text-sm font-medium text-gray-700">Harga</label>
+                            <input type="number" name="harga" id="price"
+                                value="{{ old('harga', $item->harga) }}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                placeholder="Masukkan harga kursus">
+                            <x-input-error class="mt-2" :messages="$errors->get('harga')" />
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" data-modal-target="updateProductModal-{{ $item->id }}"
+                                data-modal-toggle="updateProductModal-{{ $item->id }}"
+                                class="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border bg-red-500 text-white hover:bg-red-600">
+                                Batal
+                            </button>
+                            <button type="submit"
+                                class="ml-4 py-3 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-md border bg-blue-600 text-white hover:bg-blue-700">
+                                Simpan
+                            </button>
+                        </div>
+
                     </form>
                 </div>
             </div>

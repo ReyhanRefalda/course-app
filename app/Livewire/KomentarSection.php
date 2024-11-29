@@ -2,11 +2,11 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use Livewire\Component as LivewireComponent;
 use App\Models\Komentar;
 use Illuminate\Support\Facades\Auth;
 
-class KomentarSection extends Component
+class KomentarSection extends LivewireComponent
 {
     public $artikelId;
     public $komentars;
@@ -28,19 +28,23 @@ class KomentarSection extends Component
 
     public function addComment()
     {
-        $this->validate([
-            'content' => 'required|min:3|max:500',
-        ]);
+        $this->validate(
+            [
+                'content' => 'required|min:3|max:500',
+            ],
+            [
+                'content.required' => 'Komentar harus diisi',
+            ]
+        );
 
         Komentar::create([
             'content' => $this->content,
             'artikel_id' => $this->artikelId,
             'user_id' => Auth::user()->id,
-
         ]);
 
-        $this->content = '';
-        $this->loadComments();
+        $this->reset('content');
+        $this->loadComments(); // Refresh komentar
     }
 
     public function render()

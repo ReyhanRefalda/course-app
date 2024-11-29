@@ -45,7 +45,34 @@
         @foreach ($artikels as $artikel)
             <div
                 class="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+
                 <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}" alt="Artikel Thumbnail" class="w-full h-48 object-cover">
+
+                <div class="relative">
+                    <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
+                        alt="Artikel Thumbnail" class="w-full h-48 object-cover">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-70 flex items-center justify-center transition duration-300">
+                        <div class="flex gap-2 opacity-0 hover:opacity-100">
+                            <!-- Show Button -->
+                            <a href="{{ route('user.artikel.show', $artikel->slug) }}">
+                                <img src="{{ asset('aset/show-icon.png') }}" alt="Show">
+                            </a>
+                            <!-- Edit Button -->
+                            <button type="button" data-modal-target="updateProductModal-{{ $artikel->id }}"
+                                data-modal-toggle="updateProductModal-{{ $artikel->id }}">
+                                <img src="{{ asset('aset/edit-icon.png') }}" alt="Edit" class="w-10">
+                            </button>
+                            <!-- Delete Button -->
+                            <button type="button" data-modal-target="deleteModal-{{ $artikel->id }}"
+                                data-modal-toggle="deleteModal-{{ $artikel->id }}">
+                                <img src="{{ asset('aset/delete-icon.png') }}" alt="Delete" class="w-10">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="p-4">
                     <h2 class="text-xl font-bold text-gray-800">{{ $artikel->title }}</h2>
                     <p class="text-gray-600 text-sm mt-1">
@@ -73,4 +100,245 @@
     <div class="py-4">
         {!! $artikels->links() !!}
     </div>
+
+
+    <!-- Create modal -->
+    <div id="createProductModal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
+                <!-- Modal header -->
+                <div
+                    class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-800">Tambah Artikel</h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-target="createProductModal" data-modal-toggle="createProductModal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form action="{{ route('admin.artikel.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                    <div class="flex flex-col gap-6">
+                        <div class="flex flex-col gap-4">
+                            <div class="flex flex-col gap-2">
+                                <label for="title" class="block text-gray-800 font-semibold">Judul</label>
+                                <input type="text" name="title" id="title" value="{{ old('title') }}"
+                                    class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    autofocus>
+                                <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="description" class="block text-gray-800 font-semibold">Ringkasan</label>
+                                <input type="text" name="description" id="description"
+                                    value="{{ old('description') }}"
+                                    class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="content" class="block text-gray-800 font-semibold">Isi
+                                    Artikel</label>
+                                <input id="x" type="hidden" name="content">
+                                <trix-editor input="x"
+                                    class="border-gray-300 rounded-lg bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm min-h-80">
+                                    {!! old('content') !!} </trix-editor>
+                                <x-input-error class="mt-2" :messages="$errors->get('content')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="status" class="block text-gray-800 font-semibold">Status</label>
+                                <select name="status" id="status"
+                                    class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="draft" {{ old('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="publish" {{ old('status') == 'publish' ? 'selected' : '' }}>Publish
+                                    </option>
+                                </select>
+                                <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="tumbnail" class="block text-gray-800 font-semibold">Tumbnail</label>
+                                <input type="file" name="tumbnail" id="tumbnail" value="{{ old('tumbnail') }}"
+                                    class="w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <x-input-error class="mt-2" :messages="$errors->get('tumbnail')" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Simpan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Update modal -->
+    @foreach ($artikels as $artikel)
+        <div id="updateProductModal-{{ $artikel->id }}" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
+                    <!-- Modal header -->
+                    <div
+                        class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-800">Edit Artikel</h3>
+                        <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="updateProductModal-{{ $artikel->id }}">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <form action="{{ route('admin.artikel.update', $artikel->id) }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="flex flex-col gap-6">
+                            <div class="flex flex-col gap-4">
+                                <div class="flex flex-col gap-2">
+                                    <label for="title" class="block text-gray-800 font-semibold">Judul</label>
+                                    <input type="text" name="title" id="title"
+                                        value="{{ old('title', $artikel->title) }}"
+                                        class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        autofocus>
+                                    <x-input-error class="mt-2" :messages="$errors->get('title')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="description"
+                                        class="block text-gray-800 font-semibold">Ringkasan</label>
+                                    <input type="text" name="description" id="description"
+                                        value="{{ old('description', $artikel->description) }}"
+                                        class="p-2 w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+
+                                    <label for="content" class="block text-gray-800 font-semibold">
+                                        Isi Artikel
+                                    </label>
+                                    <!-- Elemen input hidden untuk Trix -->
+                                    <input id="x-{{ $artikel->id }}" type="hidden" name="content"
+                                        value="{!! old('content', $artikel->content) !!}">
+                                    <trix-editor input="x-{{ $artikel->id }}"></trix-editor>
+
+
+                                    <!-- Error message -->
+                                    <x-input-error class="mt-2" :messages="$errors->get('content')" />
+                                </div>
+
+                                <div class="flex flex-col gap-2">
+                                    <label for="status" class="block text-gray-800 font-semibold">Status</label>
+                                    <select name="status" id="status"
+                                        class="p-2 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="draft"
+                                            {{ old('status', $artikel->status) == 'draft' ? 'selected' : '' }}>
+                                            Draft</option>
+                                        <option value="publish"
+                                            {{ old('status', $artikel->status) == 'publish' ? 'selected' : '' }}>
+                                            Publish</option>
+                                    </select>
+                                    <x-input-error class="mt-2" :messages="$errors->get('status')" />
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="tumbnail" class="block text-gray-800 font-semibold">Tumbnail</label>
+                                    <input type="file" name="tumbnail" id="tumbnail"
+                                        class="w-full border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    @isset($artikel->tumbnail)
+                                        <img src="{{ asset(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail) }}"
+                                            alt="Artikel Thumbnail" class="w-full h-48 object-cover rounded-lg">
+                                    @endisset
+                                    <x-input-error class="mt-2" :messages="$errors->get('tumbnail')" />
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Simpan Perubahan
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    <!-- Delete modal -->
+    @foreach ($artikels as $artikel)
+        <div id="deleteModal-{{ $artikel->id }}" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative p-4 text-center bg-white rounded-lg shadow dark:bg-gray-50 sm:p-5">
+                    <button type="button"
+                        class="text-gray-700 absolute top-2.5 right-2.5 bg-transparent hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center  dark:hover:text-gray-900"
+                        data-modal-toggle="deleteModal-{{ $artikel->id }}">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <svg class="text-gray-400 dark:text-red-500 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true"
+                        fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <p class="mb-4 text-gray-500 dark:text-gray-800">Apakah anda yakin untuk menghapus artikel ini?</p>
+                    <div class="flex justify-center items-center space-x-4">
+                        <button data-modal-toggle="deleteModal-{{ $artikel->id }}" type="button"
+                            class="py-2 px-3 text-sm font-medium text-white bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-white-900 focus:z-10 dark:bg-blue-500 dark:text-white dark:border-blue-500 dark:hover:text-white dark:hover:bg-blue-800 dark:focus:ring-blue-800">Batalkan</button>
+                        <form action="{{ route('admin.artikel.destroy', $artikel->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="flex items-center px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200">
+                                Hapus
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Ambil elemen input hidden dan editor
+            const hiddenInput = document.getElementById("x");
+            const trixEditor = document.querySelector("trix-editor");
+
+            // Debug nilai hidden input
+            console.log("Hidden Input Value:", hiddenInput.value);
+
+            // Isi editor dengan nilai lama
+            if (hiddenInput.value) {
+                trixEditor.editor.loadHTML(hiddenInput.value);
+            }
+
+            // Sinkronisasi perubahan dari editor ke hidden input
+            trixEditor.addEventListener("trix-change", function () {
+                hiddenInput.value = trixEditor.editor.getDocument().toString();
+            });
+        });
+    </script>
+
 </x-admin>

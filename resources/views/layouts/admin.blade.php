@@ -25,6 +25,7 @@
 
     <!-- Trix Editor CSS -->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
+    <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}" />

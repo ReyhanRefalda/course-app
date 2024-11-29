@@ -26,7 +26,7 @@ class ArtikelController extends Controller
                 $query->where('title', 'like', "%{$search}%")
                     ->orWhere('content', 'like', "%{$search}%");
             }
-        })->orderBy('id', 'desc')->paginate(3)->withQueryString();
+        })->orderBy('id', 'desc')->paginate(9)->withQueryString();
         return view('admin.artikel.index', compact('artikels'));
     }
 
@@ -100,17 +100,22 @@ class ArtikelController extends Controller
             if (isset($artikel->tumbnail) && file_exists(public_path(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail))) {
                 unlink(public_path(getenv('CUSTOM_TUMBNAIL_LOCATION') . '/' . $artikel->tumbnail));
             }
-    
+
             // Upload file baru
             $image = $request->file('tumbnail');
             $image_name = time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path(getenv('CUSTOM_TUMBNAIL_LOCATION'));
             $image->move($destinationPath, $image_name);
         }
-    
+
         // Bersihkan konten dari elemen tambahan
+
       
     
+
+        $cleanContent = strip_tags($request->content, '<p><a><strong><em><ul><li><ol><blockquote><br>');
+
+
         // Data yang akan diupdate
         $data = [
             'title' => $request->title,
@@ -125,9 +130,9 @@ class ArtikelController extends Controller
 
         return redirect()->route('admin.artikel.index')->with('success', 'Artikel berhasil diupdate!');
     }
-    
-    
-    
+
+
+
 
     /**
      * Remove the specified resource from storage.
