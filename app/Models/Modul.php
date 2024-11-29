@@ -2,21 +2,38 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Modul extends Model
 {
+    use HasFactory;
+
     protected $table = 'modul';
 
-    // fillable
+   
+    /**
+     * Atribut yang dapat diisi (mass assignable).
+     */
     protected $fillable = [
         'judul',
-        'kursus_id',
+        'kursus_id', 
     ];
 
-    // Relationship
+    /**
+     * Relasi ke kursus (one-to-many, modul -> kursus).
+     */
     public function kursus()
     {
-        return $this->belongsTo(Kursus::class, 'kursus_id');
+        return $this->belongsTo(Kursus::class);
+    }
+
+
+    /**
+     * Relasi ke pelajaran (one-to-many, modul -> pelajaran).
+     */
+    public function pelajaran()
+    {
+        return $this->hasMany(Pelajaran::class, 'modul_id'); // 'modul_id' adalah foreign key di tabel pelajaran
     }
 }

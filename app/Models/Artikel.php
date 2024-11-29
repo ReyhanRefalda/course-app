@@ -22,10 +22,8 @@ class Artikel extends Model
         'users_id',
     ];
 
-    // Relasi ke model User (admin yang membuat artikel)
-    // Artikel.php
     public function user()
     {
-        return $this->belongsTo(User::class, 'users_id');
+        return $this->belongsTo(User::class, 'users_id', 'id');
     }
 }

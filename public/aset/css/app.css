@@ -1,21 +1,50 @@
-.overlay-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.group:hover {
+    transition: all 0.3s ease-in-out;
+    transform: translateY(5px), translateZ(5px);
+    box-shadow: 0 0 0.2rem #f7f9fa;
 }
 
-.group:hover .overlay-layer {
-    opacity: 1;
+/* animated user header artikel */
+.animate-fancy-gradient {
+    animation: fancy-gradient 8s ease-in-out infinite;
+    background: linear-gradient(
+        120deg,
+        #b05cb0,
+        #fcb16b,
+        #6bfcac,
+        #fcb16b,
+        #b05cb0
+    );
+    background-size: 300% 300%;
+    border-radius: 10px;
+}
+@keyframes fancy-gradient {
+    0% {
+        background-position: 0% 0%;
+        background-size: 300% 300%;
+    }
+    25% {
+        background-position: 50% 50%;
+        background-size: 250% 250%;
+    }
+    50% {
+        background-position: 100% 0%;
+        background-size: 300% 300%;
+    }
+    75% {
+        background-position: 50% 100%;
+        background-size: 200% 200%;
+    }
+    100% {
+        background-position: 0% 0%;
+        background-size: 300% 300%;
+    }
 }
 
-.overlay-layer .flex {
-    gap: 10px;
+.login-invitation {
+    background-color: rgba(24, 24, 24, .3);
+    position: relative;
+    top: -85px;
+    padding-top: 100px;
+    backdrop-filter: blur(2px);
 }

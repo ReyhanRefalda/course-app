@@ -2,31 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Kursus extends Model
 {
     use HasFactory;
 
+    /**
+     * Nama tabel (jika berbeda dari default).
+     */
     protected $table = 'kursus';
 
-    // Kolom yang bisa diisi secara massal
+    /**
+     * Atribut yang dapat diisi (mass assignable).
+     */
     protected $fillable = [
         'judul',
         'deskripsi',
         'harga',
-        'modul_id',
     ];
 
-    // Relasi ke model User (admin yang membuat artikel)
-    // Artikel.php
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+    /**
+     * Relasi ke modul (one-to-many, kursus -> modul).
+     */
     public function modul()
     {
-        return $this->hasMany(User::class, 'modul_id');
+        return $this->hasMany(Modul::class);
     }
+
 }

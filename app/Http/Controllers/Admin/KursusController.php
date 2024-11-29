@@ -6,6 +6,7 @@ use App\Models\Modul;
 use App\Models\Kursus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\KursusRequest;
 use Illuminate\Support\Facades\Auth;
 
 class KursusController extends Controller
@@ -16,50 +17,51 @@ class KursusController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $moduls = Modul::whereNull('kursus_id')->get();
         $search = $request->search;
-        $kursus = Kursus::all();
-        $moduls = Modul::all();
+
+
+        $kursus = Kursus::with('modul')
+            ->when($search, function ($query) use ($search) {
+                $query->where('judul', 'like', '%' . $search . '%');
+            })
+            ->get();
+
         return view('admin.kursus.index', compact('kursus', 'moduls'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $moduls = Modul::all();
+        $moduls = Modul::whereNull('kursus_id')->get();
         return view('admin.kursus.create', compact('moduls'));
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(KursusRequest $request)
     {
-        $request->validate([
-            'judul' => 'required',
-            'deskripsi' => 'required',
-            'harga' => 'required|numeric|min:0',
-            'modul_id' => 'required|exists:modul,id',
-        ], [
-            'judul.required' => 'Judul wajib diisi',
-            'deskripsi.required' => 'Deskripsi wajib diisi',
-            'harga.required' => 'Harga wajib diisi',
-            'harga.numeric' => 'Harga harus berupa angka',
-            'harga.min' => 'Harga tidak boleh kurang dari 0',
+        $validated = $request->validated();
+
+        $kursus = Kursus::create([
+            'judul' => $validated['judul'],
+            'deskripsi' => $validated['deskripsi'] ?? '',
+            'harga' => $validated['harga'],
         ]);
 
-        $data = [
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
-            'harga' => $request->harga,
-            'modul_id' => $request->modul_id
-        ];
+        if (!empty($validated['modul_id'])) {
+            Modul::whereIn('id', $validated['modul_id'])->update(['kursus_id' => $kursus->id]);
+        }
 
-        Kursus::create($data);
-
-        return redirect()->route('admin.kursus.index')->with('success', 'Kursus berhasil diupdate!');
+        return redirect()->route('admin.kursus.index')->with('success', 'Kursus berhasil ditambahkan.');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -71,33 +73,46 @@ class KursusController extends Controller
      */
     public function edit($id)
     {
-        $kursus = Kursus::findOrFail($id);
-        return view('admin.kursus.edit', compact('kursus'));
+        $kursus = Kursus::with('modul')->findOrFail($id);
+        
+        // Debugging
+        if ($kursus->modul === null) {
+            dd('Modul is null');
+        } elseif ($kursus->modul->isEmpty()) {
+            dd('No modul found for this kursus.');
+        }
+    
+        // Ambil modul yang belum terkait kursus atau terkait dengan kursus ini
+        $moduls = Modul::whereNull('kursus_id')
+            ->orWhere('kursus_id', $kursus->id)
+            ->get();
+        
+        return view('admin.kursus.edit', compact('kursus', 'moduls'));
     }
+    
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(KursusRequest $request, $id)
     {
         $kursus = Kursus::findOrFail($id);
 
-        $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'harga' => 'required|numeric|min:0',
-        ], [
-            'judul.required' => 'Judul wajib diisi',
-            'judul.string' => 'Judul harus berupa teks',
-            'judul.max' => 'Judul tidak boleh lebih dari 255 karakter',
-            'deskripsi.required' => 'Deskripsi wajib diisi',
-            'deskripsi.string' => 'Deskripsi harus berupa teks',
-            'harga.required' => 'Harga wajib diisi',
-            'harga.numeric' => 'Harga harus berupa angka',
-            'harga.min' => 'Harga tidak boleh kurang dari 0',
-        ]);
+        $validatedData = $request->validated();
 
         $kursus->update($validatedData);
+
+
+        if (isset($validatedData['modul_id'])) {
+            Modul::whereIn('id', $validatedData['modul_id'])->update(['kursus_id' => $kursus->id]);
+            Modul::whereNotIn('id', $validatedData['modul_id'])
+                ->where('kursus_id', $kursus->id)
+                ->update(['kursus_id' => null]);
+        } else {
+
+            Modul::where('kursus_id', $kursus->id)->update(['kursus_id' => null]);
+        }
 
         return redirect()
             ->route('admin.kursus.index')
