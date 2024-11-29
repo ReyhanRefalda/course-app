@@ -11,106 +11,7 @@
 </head>
 
 <body class="bg-belibang-[#f7f9fa] font-poppins text-white">
-    <nav class="w-full fixed top-0 bg-[#00000010] backdrop-blur-lg z-10">
-        <div class="container max-w-[1130px] mx-auto flex items-center justify-between h-[74px]">
-            <div class="flex items-center gap-[26px]">
-                <a href="{{ route('front.index') }}" class="flex w-[154px] shrink-0 items-center">
-                    <img src="{{ asset('assets/images/logos/courseapp.png') }}" alt="logo">
-                </a>
-                <ul class="flex gap-6 items-center">
-                    <li class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">
-                        <a href="{{ route('front.index') }}">Home</a>
-                    </li>
-                    {{-- <li class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300 relative">
-                        <button id="menu-button" class="flex items-center gap-1 focus:text-belibang-light-grey">
-                            <span>Categories</span>
-                            <img src="{{asset('assets/images/icons/arrow-down.svg')}}" alt="icon">
-                        </button>
-                        <div class="dropdown-menu hidden absolute top-[52px] grid grid-cols-2 p-4 gap-[10px] w-[526px] rounded-[20px] bg-[#1E1E1E] border border-[#414141] z-10">
-                            <div class="col-span-2 flex justify-between items-center rounded-2xl p-[12px_16px] border border-[#414141] hover:bg-[#2A2A2A] transition-all duration-300">
-                                <div class="flex items-center">
-                                    <a href="" class="w-[58px] h-[58px] flex shrink-0 items-center">
-                                        <img src="{{asset('assets/images/icons/cart.svg')}}" alt="icon">
-                                    </a>
-                                    <a href="" class="flex flex-col">
-                                        <p class="font-bold text-sm text-white">All Products</p>
-                                        <p class="text-xs text-belibang-grey">Everything in One Place</p>
-                                    </a>
-                                </div>
-                                <div class="w-6 h-6 flex shrink-0">
-                                    <img src="{{asset('assets/images/icons/crown.svg')}}" alt="icon">
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center rounded-2xl p-[12px_16px] border border-[#414141] hover:bg-[#2A2A2A] transition-all duration-300">
-                                <div class="flex items-center">
-                                    <a href="" class="w-[58px] h-[58px] flex shrink-0 items-center">
-                                        <img src="{{asset('assets/images/icons/laptop.svg')}}" alt="icon">
-                                    </a>
-                                    <a href="" class="flex flex-col">
-                                        <p class="font-bold text-sm text-white">Templates</p>
-                                        <p class="text-xs text-belibang-grey">Designs Made Easy</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center rounded-2xl p-[12px_16px] border border-[#414141] hover:bg-[#2A2A2A] transition-all duration-300">
-                                <div class="flex items-center">
-                                    <a href="" class="w-[58px] h-[58px] flex shrink-0 items-center">
-                                        <img src="{{asset('assets/images/icons/hat.svg')}}" alt="icon">
-                                    </a>
-                                    <a href="" class="flex flex-col">
-                                        <p class="font-bold text-sm text-white">Courses</p>
-                                        <p class="text-xs text-belibang-grey">Expand Your Skills</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center rounded-2xl p-[12px_16px] border border-[#414141] hover:bg-[#2A2A2A] transition-all duration-300">
-                                <div class="flex items-center">
-                                    <a href="" class="w-[58px] h-[58px] flex shrink-0 items-center">
-                                        <img src="{{asset('assets/images/icons/book.svg')}}" alt="icon">
-                                    </a>
-                                    <a href="" class="flex flex-col">
-                                        <p class="font-bold text-sm text-white">Ebooks</p>
-                                        <p class="text-xs text-belibang-grey">Read and Learn</p>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="flex justify-between items-center rounded-2xl p-[12px_16px] border border-[#414141] hover:bg-[#2A2A2A] transition-all duration-300">
-                                <div class="flex items-center">
-                                    <a href="" class="w-[58px] h-[58px] flex shrink-0 items-center">
-                                        <img src="{{asset('assets/images/icons/pen.svg')}}" alt="icon">
-                                    </a>
-                                    <a href="" class="flex flex-col">
-                                        <p class="font-bold text-sm text-white">Fonts</p>
-                                        <p class="text-xs text-belibang-grey">Typography Selection</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </li> --}}
-                    <li class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">
-                        <a href="">Kategori</a>
-                    </li>
-                    <li class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">
-                        <a href="">Kursus</a>
-                    </li>
-                    <li class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">
-                        <a href="">Tentang Kami</a>
-                    </li>
-                    <li class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">
-                        <a href="">About</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="flex gap-6 items-center">
-                <a href="{{ route('login') }}"
-                    class="text-belibang-grey hover:text-belibang-light-grey transition-all duration-300">Log in</a>
-                <a href="{{ route('register') }}"
-                    class="p-[8px_16px] w-fit h-fit rounded-[12px] text-belibang-grey border border-belibang-dark-grey hover:bg-[#2A2A2A] hover:text-white transition-all duration-300">Sign
-                    up</a>
-            </div>
-        </div>
-    </nav>
-
+    @include('components.navbar')
     <header
         class="w-full pt-[74px] pb-[34px] bg-[url('{{ asset('assets/images/backgrounds/hero-image.png') }}')] bg-cover bg-no-repeat bg-center relative z-0">
         <div class="container max-w-[1130px] mx-auto flex flex-col items-center justify-center gap-[34px] z-10">
@@ -463,18 +364,26 @@
         <h2 class="font-semibold text-[32px]">New Product</h2>
         <div class="grid grid-cols-4 gap-[22px]">
             <div class="product-card flex flex-col rounded-[18px] bg-[#ffff] overflow-hidden border border-gray-300">
-                <a href="{{ route('front.detail') }}" class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
-                    <img src="{{ asset('assets/images/thumbnails/img1.png') }}" class="w-full h-full object-cover" alt="thumbnail">
-                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp 129,000</p>
+                <a href="{{ route('front.detail') }}"
+                    class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
+                    <img src="{{ asset('assets/images/thumbnails/img1.png') }}" class="w-full h-full object-cover"
+                        alt="thumbnail">
+                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp
+                        129,000</p>
                 </a>
                 <div class="p-[10px_14px_12px] h-full flex flex-col justify-between gap-[14px]">
                     <div class="flex flex-col gap-1">
-                        <a href="{{ route('front.detail') }}" class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black text-belibang-black">SaaS Website Master Template: Streamline Your Digital Solution</a>
-                        <p class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">Template</p>
+                        <a href="{{ route('front.detail') }}"
+                            class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black text-belibang-black">SaaS
+                            Website Master Template: Streamline Your Digital Solution</a>
+                        <p
+                            class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">
+                            Template</p>
                     </div>
                     <div class="flex items-center gap-[6px]">
                         <div class="w-6 h-6 flex shrink-0 items-center justify-center rounded-full overflow-hidden">
-                            <img src="{{ asset('assets/images/logos/framer.png') }}" class="w-full h-full object-cover" alt="logo">
+                            <img src="{{ asset('assets/images/logos/framer.png') }}"
+                                class="w-full h-full object-cover" alt="logo">
                         </div>
                         <a href="" class="font-semibold text-xs text-belibang-grey">Framer</a>
                     </div>
@@ -482,37 +391,54 @@
             </div>
 
             <div class="product-card flex flex-col rounded-[18px] bg-[#ffff] overflow-hidden border border-gray-300">
-                <a href="{{ route('front.detail') }}" class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
-                    <img src="{{ asset('assets/images/thumbnails/img2.png') }}" class="w-full h-full object-cover" alt="thumbnail">
-                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp 700,000</p>
+                <a href="{{ route('front.detail') }}"
+                    class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
+                    <img src="{{ asset('assets/images/thumbnails/img2.png') }}" class="w-full h-full object-cover"
+                        alt="thumbnail">
+                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp
+                        700,000</p>
                 </a>
                 <div class="p-[10px_14px_12px] h-full flex flex-col justify-between gap-[14px]">
                     <div class="flex flex-col gap-1">
-                        <a href="{{ route('front.detail') }}" class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black text-belibang-black">SaaS Website Master Template: Streamline Your Digital Solution</a>
-                        <p class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">Template</p>
+                        <a href="{{ route('front.detail') }}"
+                            class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black text-belibang-black">SaaS
+                            Website Master Template: Streamline Your Digital Solution</a>
+                        <p
+                            class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">
+                            Template</p>
                     </div>
                     <div class="flex items-center gap-[6px]">
                         <div class="w-6 h-6 flex shrink-0 items-center justify-center rounded-full overflow-hidden">
-                            <img src="{{ asset('assets/images/logos/framer.png') }}" class="w-full h-full object-cover" alt="logo">
+                            <img src="{{ asset('assets/images/logos/framer.png') }}"
+                                class="w-full h-full object-cover" alt="logo">
                         </div>
-                        <a href="{{ route('front.detail') }}" class="font-semibold text-xs text-belibang-grey">Framer</a>
+                        <a href="{{ route('front.detail') }}"
+                            class="font-semibold text-xs text-belibang-grey">Framer</a>
                     </div>
                 </div>
             </div>
 
             <div class="product-card flex flex-col rounded-[18px] bg-[#ffff] overflow-hidden border border-gray-300">
-                <a href="{{ route('front.detail') }}" class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
-                    <img src="{{ asset('assets/images/thumbnails/img3.png') }}" class="w-full h-full object-cover" alt="thumbnail">
-                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp 89,000</p>
+                <a href="{{ route('front.detail') }}"
+                    class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
+                    <img src="{{ asset('assets/images/thumbnails/img3.png') }}" class="w-full h-full object-cover"
+                        alt="thumbnail">
+                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp
+                        89,000</p>
                 </a>
                 <div class="p-[10px_14px_12px] h-full flex flex-col justify-between gap-[14px]">
                     <div class="flex flex-col gap-1">
-                        <a href="{{ route('front.detail') }}" class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black">SaaS Website Essentials Your Blueprint to Success Online</a>
-                        <p class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">Template</p>
+                        <a href="{{ route('front.detail') }}"
+                            class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black">SaaS Website
+                            Essentials Your Blueprint to Success Online</a>
+                        <p
+                            class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">
+                            Template</p>
                     </div>
                     <div class="flex items-center gap-[6px]">
                         <div class="w-6 h-6 flex shrink-0 items-center justify-center rounded-full overflow-hidden">
-                            <img src="{{ asset('assets/images/logos/framer.png') }}" class="w-full h-full object-cover" alt="logo">
+                            <img src="{{ asset('assets/images/logos/framer.png') }}"
+                                class="w-full h-full object-cover" alt="logo">
                         </div>
                         <a href="" class="font-semibold text-xs text-belibang-grey">Framer</a>
                     </div>
@@ -520,18 +446,26 @@
             </div>
 
             <div class="product-card flex flex-col rounded-[18px] bg-[#ffff] overflow-hidden border border-gray-300">
-                <a href="{{ route('front.detail') }}" class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
-                    <img src="{{ asset('assets/images/thumbnails/img4.png') }}" class="w-full h-full object-cover" alt="thumbnail">
-                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp 250,000</p>
+                <a href="{{ route('front.detail') }}"
+                    class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
+                    <img src="{{ asset('assets/images/thumbnails/img4.png') }}" class="w-full h-full object-cover"
+                        alt="thumbnail">
+                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp
+                        250,000</p>
                 </a>
                 <div class="p-[10px_14px_12px] h-full flex flex-col justify-between gap-[14px]">
                     <div class="flex flex-col gap-1">
-                        <a href="{{ route('front.detail') }}" class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black">Vitalize - Healthcare App UI Kit</a>
-                        <p class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">Ebook</p>
+                        <a href="{{ route('front.detail') }}"
+                            class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black">Vitalize -
+                            Healthcare App UI Kit</a>
+                        <p
+                            class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px] p-[4px_6px] w-fit">
+                            Ebook</p>
                     </div>
                     <div class="flex items-center gap-[6px]">
                         <div class="w-6 h-6 flex shrink-0 items-center justify-center rounded-full overflow-hidden">
-                            <img src="{{ asset('assets/images/logos/vekotora.svg') }}" class="w-full h-full object-cover" alt="logo">
+                            <img src="{{ asset('assets/images/logos/vekotora.svg') }}"
+                                class="w-full h-full object-cover" alt="logo">
                         </div>
                         <a href="" class="font-semibold text-xs text-belibang-grey">Vektora Studio</a>
                     </div>
@@ -539,18 +473,25 @@
             </div>
 
             <div class="product-card flex flex-col rounded-[18px] bg-[#ffff] overflow-hidden border border-gray-300">
-                <a href="{{ route('front.detail') }}" class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
-                    <img src="{{ asset('assets/images/thumbnails/img5.png') }}" class="w-full h-full object-cover" alt="thumbnail">
-                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp 88,000</p>
+                <a href="{{ route('front.detail') }}"
+                    class="thumbnail w-full h-[180px] flex shrink-0 overflow-hidden relative">
+                    <img src="{{ asset('assets/images/thumbnails/img5.png') }}" class="w-full h-full object-cover"
+                        alt="thumbnail">
+                    <p class="backdrop-blur bg-black/30 rounded-[4px] p-[4px_8px] absolute top-3 right-[14px] z-10">Rp
+                        88,000</p>
                 </a>
                 <div class="p-[10px_14px_12px] h-full flex flex-col justify-between gap-[14px]">
                     <div class="flex flex-col gap-1">
-                        <a href="{{ route('front.detail') }}" class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black">WYR™ - Fintech Design System</a>
-                        <p class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px_6px] w-fit">Course</p>
+                        <a href="{{ route('front.detail') }}"
+                            class="font-semibold line-clamp-2 hover:line-clamp-none text-belibang-black">WYR™ - Fintech
+                            Design System</a>
+                        <p class="bg-[#2A2A2A] font-semibold text-xs text-belibang-grey rounded-[4px_6px] w-fit">Course
+                        </p>
                     </div>
                     <div class="flex items-center gap-[6px]">
                         <div class="w-6 h-6 flex shrink-0 items-center justify-center rounded-full overflow-hidden">
-                            <img src="{{ asset('assets/images/logos/strangehelix.svg') }}" class="w-full h-full object-cover" alt="logo">
+                            <img src="{{ asset('assets/images/logos/strangehelix.svg') }}"
+                                class="w-full h-full object-cover" alt="logo">
                         </div>
                         <a href="" class="font-semibold text-xs text-belibang-grey">strangehelix.bio</a>
                     </div>
@@ -1220,82 +1161,7 @@
         </div>
     </section> --}}
 
-    <footer class="bg-[#181818] py-[34px]">
-        <div class="container max-w-[1130px] mx-auto flex flex-col gap-[66px]">
-            <div class="flex justify-between">
-                <div class="flex flex-col justify-between">
-                    <div class="flex shrink-0">
-                        <img src="{{ asset('assets/images/logos/courseapp.png') }}" style="width: 200px;"
-                            alt="logo">
-                    </div>
-                    <div class="flex flex-col gap-[10px]">
-                        <p class="font-semibold text-sm">Connect with us</p>
-                        <div class="flex items-center gap-5">
-                            <a href=""
-                                class="w-9 h-9 flex shrink-0 rounded-full overflow-hidden border border-[#595959] items-center justify-center">
-                                <img src="{{ asset('assets/images/logos/dribbble.svg') }}" class="w-6 h-6"
-                                    alt="icon">
-                            </a>
-                            <a href=""
-                                class="w-9 h-9 flex shrink-0 rounded-full overflow-hidden border border-[#595959] items-center justify-center">
-                                <img src="{{ asset('assets/images/logos/facebook.svg') }}" class="w-6 h-6"
-                                    alt="icon">
-                            </a>
-                            <a href=""
-                                class="w-9 h-9 flex shrink-0 rounded-full overflow-hidden border border-[#595959] items-center justify-center">
-                                <img src="{{ asset('assets/images/logos/apple.svg') }}" class="w-6 h-6"
-                                    alt="icon">
-                            </a>
-                            <a href=""
-                                class="w-9 h-9 flex shrink-0 rounded-full overflow-hidden border border-[#595959] items-center justify-center">
-                                <img src="{{ asset('assets/images/logos/figma.svg') }}" class="w-6 h-6"
-                                    alt="icon">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex gap-[72px]">
-                    <div class="flex flex-col gap-8">
-                        <p class="font-semibold text-sm">Browse</p>
-                        <div class="flex flex-col gap-[18px]">
-                            <a href="" class="text-belibang-grey font-semibold text-xs">All Products</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Templates</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Ebooks</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Courses</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Fonts</a>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-8">
-                        <p class="font-semibold text-sm">Platform</p>
-                        <div class="flex flex-col gap-[18px]">
-                            <a href="" class="text-belibang-grey font-semibold text-xs">All-Access Pass</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Become an author</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Affiliate program</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Terms & Licensing</a>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-8">
-                        <p class="font-semibold text-sm">Customer service</p>
-                        <div class="flex flex-col gap-[18px]">
-                            <a href="" class="text-belibang-grey font-semibold text-xs">FAQ</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Orders</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Payments</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">refunds</a>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-8">
-                        <p class="font-semibold text-sm">Contact us</p>
-                        <div class="flex flex-col gap-[18px]">
-                            <a href="" class="text-belibang-grey font-semibold text-xs">About us</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Company</a>
-                            <a href="" class="text-belibang-grey font-semibold text-xs">Careers</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p class="text-[10px] text-[#595959]">© 2024, Belibang LLC.</p>
-        </div>
-    </footer>
+    @include('components.footer')
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
