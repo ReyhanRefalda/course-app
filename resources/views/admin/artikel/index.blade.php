@@ -91,7 +91,7 @@
                         class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-70 flex items-center justify-center transition duration-300">
                         <div class="flex gap-2 opacity-0 hover:opacity-100">
                             <!-- Show Button -->
-                            <a href="{{ route('admin.artikel.show', $artikel->id) }}" class="w-10">
+                            <a href="{{ route('user.artikel.show', $artikel->slug) }}">
                                 <img src="{{ asset('aset/show-icon.png') }}" alt="Show">
                             </a>
                             <!-- Edit Button -->
@@ -269,7 +269,7 @@
                                     <!-- Error message -->
                                     <x-input-error class="mt-2" :messages="$errors->get('content')" />
                                 </div>
-                              
+
                                 <div class="flex flex-col gap-2">
                                     <label for="status" class="block text-gray-800 font-semibold">Status</label>
                                     <select name="status" id="status"
@@ -352,15 +352,15 @@
             // Ambil elemen input hidden dan editor
             const hiddenInput = document.getElementById("x");
             const trixEditor = document.querySelector("trix-editor");
-    
+
             // Debug nilai hidden input
             console.log("Hidden Input Value:", hiddenInput.value);
-    
+
             // Isi editor dengan nilai lama
             if (hiddenInput.value) {
                 trixEditor.editor.loadHTML(hiddenInput.value);
             }
-    
+
             // Sinkronisasi perubahan dari editor ke hidden input
             trixEditor.addEventListener("trix-change", function () {
                 hiddenInput.value = trixEditor.editor.getDocument().toString();

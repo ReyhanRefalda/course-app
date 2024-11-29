@@ -21,9 +21,6 @@ Route::get('/', [FrontContoller::class, 'index'])->name('front.index');
 Route::get('/detail', [FrontContoller::class, 'detail'])->name('front.detail');
 Route::get('/beli', [FrontContoller::class, 'beli'])->name('front.beli');
 
-
-Route::get('/artikel', [UserArtikelController::class, 'index'])->name('user.artikel.index');
-
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->name('dashboard');

@@ -9,27 +9,47 @@ class ArtikelController extends Controller
 {
     public function index()
     {
-        $lastData = $this->lastData();
+        $search = request()->query('search');
+        $query = Artikel::where('status', 'publish');
 
-        $secondToFifthData = Artikel::where('status', 'publish')
-            ->where('id', '!=', $lastData->id)
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%$search%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('nama', 'LIKE', "%$search%");
+                    });
+            });
+        }
+
+        $lastData = $query->orderBy('id', 'desc')->latest()->first();
+
+        if (!$lastData) {
+            return view('user.artikel.index', [
+                'artikels' => $query->paginate(6),
+                'lastData' => null,
+                'secondToFifthData' => collect()
+            ]);
+        }
+
+        $secondToFifthData = $query->where('id', '!=', $lastData->id)
             ->orderBy('id', 'desc')
-            ->skip(0)
             ->take(4)
             ->get();
 
-        $artikels = Artikel::where('status', 'publish')
-            ->whereNotIn('id', $secondToFifthData->pluck('id')->prepend($lastData->id))
+        $artikels = $query->whereNotIn('id', $secondToFifthData->pluck('id')->prepend($lastData->id))
             ->orderBy('id', 'desc')
-            ->paginate(10);
+            ->paginate(6);
 
         return view('user.artikel.index', compact('artikels', 'lastData', 'secondToFifthData'));
     }
 
+
+
     public function detail($slug)
     {
+        $artikleSidebar = Artikel::where('status', 'publish')->latest()->take(7)->get();
         $artikels = Artikel::where('status', 'publish')->where('slug', $slug)->firstOrFail();
-        return view('user.artikel.show', compact('artikels'));
+        return view('user.artikel.show', compact('artikels', 'artikleSidebar'));
     }
 
     public function lastData()

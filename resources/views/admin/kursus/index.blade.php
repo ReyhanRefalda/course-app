@@ -258,7 +258,7 @@
                             <label for="modul_id" class="block text-sm font-medium text-gray-700">Modul</label>
                             <select id="modul_id" name="modul[]" class="form-control" multiple>
                                 @foreach($moduls as $modul)
-                                    <option value="{{ $modul->id }}" 
+                                    <option value="{{ $modul->id }}"
                                         {{ in_array($modul->id, $selectedModuls) ? 'selected' : '' }}>
                                         {{ $modul->name }}
                                     </option>
